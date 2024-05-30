@@ -1,0 +1,16 @@
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1280px;
+@use './typography' as *;
+@use './colors' as *;
+
+@mixin tablet {
+    @media screen and (min-width: $breakpoint-tablet) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: $breakpoint-desktop) {
+        @content;
+    }
+}
