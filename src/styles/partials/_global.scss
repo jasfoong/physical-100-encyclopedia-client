@@ -1,0 +1,16 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/typography" as *;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: $black;
+}
+
+a {
+    text-decoration: none;
+}

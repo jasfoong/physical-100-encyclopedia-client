@@ -1,0 +1,48 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.challenges {
+    margin: 1rem;
+
+    &__heading {
+        @include table-heading-mobile;
+    }
+
+    &__column-headings-wrapper-lg {
+        display: flex;
+    }
+
+    &__column-heading-lg {
+        @include table-subheadings-lg;
+
+        &--title {
+            width: 50%;
+        }
+    }
+
+    &__instance-link {
+        color: white;
+    }
+
+    &__instance {
+        display: flex;
+    }
+
+    &__img {
+        width: 10%;
+        height: 10%;
+    }
+
+    &__text {
+        @include table-text-mobile;
+        color: $light-grey;
+    }
+
+    &__name {
+        @include table-text-mobile;
+        color: white;
+        width: 40%;
+    }
+}

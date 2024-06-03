@@ -14,3 +14,30 @@ $breakpoint-desktop: 1280px;
         @content;
     }
 }
+
+@mixin table-heading-mobile {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+@mixin table-subheadings-lg {
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: $light-grey;
+    width: 25%;
+}
+
+@mixin table-text-mobile {
+    font-size: 0.75rem;
+    font-weight: 400;
+    width: 25%;
+}
+
+@mixin table-img-mobile {
+    width: 9vw;
+    height: 9vw;
+    object-fit: cover;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
