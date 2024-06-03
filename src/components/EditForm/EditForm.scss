@@ -1,0 +1,53 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.edit-form {
+    margin: 1rem;
+
+    &__img-wrapper {
+        margin: 1rem;
+    }
+
+    &__img {
+        width: 100%;
+    }
+
+    &__name-wrapper, &__description-wrapper {
+        padding: 1rem 0;
+    }
+
+    &__label {
+        color: $light-grey;
+        font-weight: 600;
+        font-size: 0.75rem;
+    }
+
+    &__name-input {
+        @include edit-inputs-mobile;
+        padding: 0.5rem 0 0.5rem 0.8rem;
+    }
+
+    &__input--error {
+        border: 1px solid $ruby;
+    }
+
+    &__description-input {
+        @include edit-inputs-mobile;
+        padding: 0.5rem 0 2rem 0.8rem;
+    }
+
+    &__btns-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        width: 50%;
+        margin-left: auto;
+    }
+
+    &__btn {
+        @include edit-btn-mobile;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
