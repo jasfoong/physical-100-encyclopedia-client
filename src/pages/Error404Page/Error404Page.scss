@@ -1,0 +1,33 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.error404 {
+    height: 100vh;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__heading {
+        color: $light-grey;
+    }
+
+    &__text {
+        color: $light-grey;
+        font-size: 1rem;
+        text-align: center;
+        font-weight: 300;
+    }
+
+    &__arrow {
+        font-size: 2rem;
+        transition: transform 0.5s ease-in-out;
+
+        &:hover {
+            transform: scale(2);
+        }
+    }
+}

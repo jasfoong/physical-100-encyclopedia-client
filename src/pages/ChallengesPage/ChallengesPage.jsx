@@ -9,27 +9,27 @@ const ChallengesPage = () => {
     const [fetchError, setFetchError] = useState(false);
 
     useEffect(() => {
-            const fetchChallenges = async () => {
-                try {
-                    const { data } = await axiosInstance.get("/challenges");
-                    setChallenges(data);
-                } catch (error) {
-                    console.log(`Error retrieving challenges`, error);
-                    setFetchError(true);
-                }
-            };
-            fetchChallenges();
-        }, []);
+        const fetchChallenges = async () => {
+            try {
+                const { data } = await axiosInstance.get("/challenges");
+                setChallenges(data);
+            } catch (error) {
+                console.log(`Error retrieving challenges`, error);
+                setFetchError(true);
+            }
+        };
+        fetchChallenges();
+    }, []);
         
-        if (challenges.length === 0) {
-            return <h3>Loading...</h3>
-        }
+    if (challenges.length === 0) {
+        return <h3>Loading...</h3>
+    }
 
-        if (fetchError === true) {
-            return <p>Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
-        }
+    if (fetchError === true) {
+        return <p>Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
+    }
 
-        return (
+    return (
         <>
         <Header />
         <section className="challenges">

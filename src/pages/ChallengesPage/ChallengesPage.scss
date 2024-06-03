@@ -18,7 +18,7 @@
         @include table-subheadings-lg;
 
         &--title {
-            width: 50%;
+            width: 55%;
         }
     }
 
@@ -28,11 +28,11 @@
 
     &__instance {
         display: flex;
+        align-items: center;
     }
 
     &__img {
-        width: 10%;
-        height: 10%;
+        @include table-img-mobile;
     }
 
     &__text {
@@ -44,5 +44,6 @@
         @include table-text-mobile;
         color: white;
         width: 40%;
+        padding-right: 1rem;
     }
 }
