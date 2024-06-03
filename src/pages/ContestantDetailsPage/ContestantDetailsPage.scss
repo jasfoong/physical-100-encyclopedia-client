@@ -1,0 +1,33 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.contestant {
+    margin: 1.5rem;
+    // display: flex;
+    // align-items: center;
+
+    // &--left {
+    //     width: 40%;
+    // }
+
+    &__img {
+        width: 100%;
+        // margin-top: 20%;
+    }
+
+    // &--right {
+    //     width: 60%;
+    // }
+
+    &__name {
+        @include table-heading-mobile;
+    }
+
+    &__description {
+        @include table-text-mobile;
+        color: $light-grey;
+        width: 100%;
+    }
+}
