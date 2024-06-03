@@ -1,24 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
 import './EditForm.scss'
 
-const EditForm = ({ contestant, setIsEditing }) => {
+const EditForm = ({ contestant, challenge, setIsEditing, updateChallenge, updateContestant, editError, setEditError }) => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [editError, setEditError] = useState(false);
     const [inputErrors, setInputErrors] = useState({});
     const [formData, setFormData] = useState({
-        name: contestant.name,
-        description: contestant.description
+        name: "",
+        description: ""
     });
+
+    useEffect(() => {
+        if (contestant) {
+            setFormData({
+                name: contestant.name,
+                description: contestant.description
+            })
+        } else if (challenge) {
+            setFormData({
+                name: challenge.name,
+                description: challenge.description
+            })
+        };
+    }, [contestant, challenge])
   
     const handleInputChange = (e) => {
       const { name, value } = e.target;
-      setFormData({
-        ...formData,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         [name]: value,
-      });
+      }));
     };
 
     const validateForm = () => {
@@ -39,25 +52,39 @@ const EditForm = ({ contestant, setIsEditing }) => {
         }
 
       try {
-        await axiosInstance.put(`/contestants/${id}`, formData);
-        console.log(formData);
-        setIsEditing(false);
-        navigate(`/contestants/${id}`)
+        if (contestant) {
+            await axiosInstance.put(`/contestants/${id}`, formData);
+            console.log(formData);
+            updateContestant(formData);
+            setIsEditing(false);
+            navigate(`/contestants/${id}`)
+        } else if (challenge) {
+            await axiosInstance.put(`/challenges/${id}`, formData);
+            console.log(formData);
+            updateChallenge(formData);
+            setIsEditing(false);
+            navigate(`/challenges/${id}`)
+        }
       } catch (error) {
-        console.log(`Could not edit contestant`, error);
+        console.log(`Could not edit ${contestant ? "contestant" : "challenge"}`, error);
         setEditError(true);
       } 
     };
 
     const handleCancelClick = () => {
         setIsEditing(false);
-        navigate(`/contestants/${id}`);
-    }
+
+        if (contestant) {
+            navigate(`/contestants/${id}`);
+        } else if (challenge) {
+            navigate(`/challenges/${id}`);
+        }
+    };
   
     return (
     <>
     <div className="edit-form__img-wrapper">
-        <img className="edit-form__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt="contestant portrait"/>
+        <img className="edit-form__img" src={contestant ? `${process.env.REACT_APP_SERVER_URL}/${contestant.photo}` : `${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt={contestant ? "contestant portrait" : "challenge background"}/>
     </div>
     <form className="edit-form" onSubmit={handleFormSubmit}>
         <div className="edit-form__name-wrapper">

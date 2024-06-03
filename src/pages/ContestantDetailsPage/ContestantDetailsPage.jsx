@@ -10,12 +10,17 @@ const ContestantDetailsPage = () => {
     const [contestant, setContestant] = useState({});
     const [fetchError, setFetchError] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editError, setEditError] = useState(false);
 
     useEffect(() => {
         const fetchContestant = async () => {
             try {
                 const { data } = await axiosInstance.get(`/contestants/${id}`);
-                setContestant(data);
+                const fetchedContestant = data;
+
+                if (JSON.stringify(fetchedContestant) !== JSON.stringify(contestant)) {
+                    setContestant(fetchedContestant);
+                }
             } catch (error) {
                 console.log(`Error retrieving your contestant's information`, error);
                 setFetchError(true);
@@ -26,6 +31,17 @@ const ContestantDetailsPage = () => {
         
     const handleEditClick = () => {
         setIsEditing(true);
+    };
+
+    const updateContestant = async (updatedContestant) => {
+        try {
+            await axiosInstance.put(`/contestants/${id}`, updatedContestant);
+            setContestant(updatedContestant);
+            setIsEditing(false);
+        } catch (error) {
+            console.log(`Could not update contestant`, error);
+            setEditError(true);
+        }
     };
 
     if (!contestant) {
@@ -43,6 +59,9 @@ const ContestantDetailsPage = () => {
             <EditForm 
                 contestant={contestant}
                 setIsEditing={setIsEditing}
+                updateContestant={updateContestant}
+                editError={editError}
+                setEditError={setEditError}
             />
         ) : (
             <section className="contestant">
