@@ -6,12 +6,34 @@
 .edit-form {
     margin: 1rem;
 
+    @include tablet {
+        flex: 1;
+    }
+
+    &__section {
+        margin-top: 3rem; 
+
+        @include tablet {
+            display: flex;
+            align-items: center;
+        }
+
+        @include desktop {
+            margin-top: 15%;
+        }
+    }
+
     &__img-wrapper {
         margin: 1rem;
     }
 
     &__img {
         width: 100%;
+
+        @include tablet {
+            border-radius: 0.35rem;
+            width: 30vw;
+        }
     }
 
     &__name-wrapper, &__description-wrapper {
@@ -22,11 +44,19 @@
         color: $light-grey;
         font-weight: 600;
         font-size: 0.75rem;
+
+        @include desktop {
+            font-size: 1rem;
+        }
     }
 
     &__name-input {
         @include edit-inputs-mobile;
         padding: 0.5rem 0 0.5rem 0.8rem;
+
+        @include desktop {
+            font-size: 1rem;
+        }
     }
 
     &__input--error {
@@ -35,7 +65,12 @@
 
     &__description-input {
         @include edit-inputs-mobile;
-        padding: 0.5rem 0 2rem 0.8rem;
+        padding: 0.5rem 0 8rem 0.8rem;
+
+        @include desktop {
+            font-size: 1rem;
+            padding-right: 0.5rem;
+        }
     }
 
     &__btns-wrapper {
@@ -43,11 +78,20 @@
         justify-content: flex-end;
         width: 50%;
         margin-left: auto;
+
+        @include desktop {
+            width: 25%;
+        }
     }
 
     &__btn {
         @include edit-btn-mobile;
         border-radius: 0.5rem;
         padding: 0.5rem 0.75rem;
+
+        @include desktop {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+        }
     }
 }

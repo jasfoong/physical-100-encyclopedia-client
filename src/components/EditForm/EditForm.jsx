@@ -83,6 +83,7 @@ const EditForm = ({ contestant, challenge, setIsEditing, updateChallenge, update
   
     return (
     <>
+    <section className="edit-form__section">
     <div className="edit-form__img-wrapper">
         <img className="edit-form__img" src={contestant ? `${process.env.REACT_APP_SERVER_URL}/${contestant.photo}` : `${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt={contestant ? "contestant portrait" : "challenge background"}/>
     </div>
@@ -118,6 +119,7 @@ const EditForm = ({ contestant, challenge, setIsEditing, updateChallenge, update
             <button className="edit-form__btn" type="button" onClick={handleCancelClick}>Cancel</button>
         </div>
       </form>
+      </section>
       </>
     );
   };
