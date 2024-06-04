@@ -8,10 +8,25 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(0deg, $dark-grey, $black 80%, $ruby);
     padding-bottom: 15vh;
+    min-height: 100vh;
+    background-image: linear-gradient(0deg, $dark-grey, $black 80%, $ruby);
+    background-size: cover; 
+    background-repeat: no-repeat; 
 }
 
 a {
     text-decoration: none;
+}
+
+.page-loading-text {
+    text-align: center;
+    margin-top: 50vh;
+    color: white;
+}
+
+.fetch-error-text {
+    text-align: center;
+    margin-top: 50vh;
+    color: white;
 }

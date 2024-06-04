@@ -22,11 +22,11 @@ const ChallengesPage = () => {
     }, []);
         
     if (challenges.length === 0) {
-        return <h3>Loading...</h3>
+        return <h3 className="page-loading-text">Loading...</h3>
     }
 
     if (fetchError === true) {
-        return <p>Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
+        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
     }
 
     return (

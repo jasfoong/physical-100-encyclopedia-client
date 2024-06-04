@@ -24,7 +24,7 @@ const Navbar = () => {
             <a id="home" className="menu-item" href="/">
                 <img className="navbar__home" src={homeIcon} alt="icon of a house"/>
                 Home</a>
-            <a id="challenges" className="menu-item" href="/about">
+            <a id="challenges" className="menu-item" href="/challenges">
                 <img className="navbar__challenge" src={challengeIcon} alt="icon of rocket ship"/>
                 Challenges</a>
             </Menu>
