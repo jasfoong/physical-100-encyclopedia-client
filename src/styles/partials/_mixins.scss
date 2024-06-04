@@ -16,9 +16,10 @@ $breakpoint-desktop: 1280px;
 }
 
 @mixin table-heading-mobile {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.9rem;
+    font-weight: 700;
     color: white;
+    margin-top: 20%;
 }
 
 @mixin table-subheadings-lg {
@@ -35,11 +36,9 @@ $breakpoint-desktop: 1280px;
 }
 
 @mixin table-img-mobile {
-    width: 9vw;
-    height: 9vw;
+    width: 7.5vw;
+    height: 7.5vw;
     object-fit: cover;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
 }
 
 @mixin edit-btn-mobile {

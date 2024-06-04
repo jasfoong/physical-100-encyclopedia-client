@@ -45,7 +45,7 @@ const ContestantsPage = () => {
                 <Link to={`/contestants/${contestant.id}`} key={contestant.id} className="contestants__instance-link">
                     <div className="contestants__instance">
                     <img className="contestants__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt="contestant context"/>
-                    <h3 className="contestants__text challenges__name">{contestant.name}</h3>
+                    <h3 className="contestants__text contestants__name">{contestant.name}</h3>
                     <h4 className="contestants__text">Season {contestant.season}</h4>
                     <h4 className="contestants__text">{contestant.career}</h4>
                 </div>
