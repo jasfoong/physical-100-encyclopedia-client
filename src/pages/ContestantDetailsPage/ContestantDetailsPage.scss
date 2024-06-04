@@ -7,29 +7,54 @@
     margin: 1.5rem;
     display: flex;
     flex-direction: column;
-    // align-items: center;
 
-    // &--left {
-    //     width: 40%;
-    // }
+    @include tablet {
+        margin-top: 10%;
+    }
+
+    @include tablet {
+        flex-direction: row;
+        align-items: flex-end;
+    }
 
     &__img {
         width: 100%;
-        // margin-top: 20%;
+
+        @include tablet {
+            border-radius: 0.35rem;
+            width: 30vw;
+        }
     }
 
-    // &--right {
-    //     width: 60%;
-    // }
+    &--right {
+        @include tablet {
+            margin-left: 2rem;
+        }
+    }
 
     &__name {
         @include table-heading-mobile;
+
+        @include desktop {
+            font-size: 2.4rem;
+        }
     }
 
     &__description {
         @include table-text-mobile;
         color: $light-grey;
-        width: 100%;
+        width: 90%;
+        line-height: 1rem;
+
+        @include tablet {
+            font-size: 0.9rem;
+            line-height: 1.2rem;
+        }
+
+        @include desktop {
+            font-size: 1rem;
+            line-height: 1.4rem;
+        }
     }
 
     &__edit-btn {
