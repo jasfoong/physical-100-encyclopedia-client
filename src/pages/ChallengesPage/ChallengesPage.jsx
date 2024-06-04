@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
+import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import './ChallengesPage.scss'
 
 const ChallengesPage = () => {
     const [challenges, setChallenges] = useState([]);
     const [fetchError, setFetchError] = useState(false);
+    const [renderedData, setRenderedData] = useState([]);
+    const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
 
     useEffect(() => {
         const fetchChallenges = async () => {
             try {
                 const { data } = await axiosInstance.get("/challenges");
                 setChallenges(data);
+                setRenderedData(data)
             } catch (error) {
                 console.log(`Error retrieving challenges`, error);
                 setFetchError(true);
@@ -20,6 +24,27 @@ const ChallengesPage = () => {
         };
         fetchChallenges();
     }, []);
+
+    const sortColumns = (key) => {
+        let direction = "asc";
+        if (sortConfig.key === key && sortConfig.direction === "asc") direction = "desc";
+
+        const sortedData = sortArray([...renderedData], {
+            by: key,
+            order: direction,
+            customOrders: {
+                [key]: (a, b) => {
+                    if (typeof a === 'boolean' && typeof b === 'boolean') {
+                        return direction === 'asc' ? a - b : b - a;
+                    }
+                    return 0;
+                }
+            }
+        });
+
+        setRenderedData(sortedData);
+        setSortConfig({ key, direction });
+    };
         
     if (challenges.length === 0) {
         return <h3 className="page-loading-text">Loading...</h3>
@@ -33,14 +58,14 @@ const ChallengesPage = () => {
         <>
         <Navbar />
         <section className="challenges">
-        <h1 className="challenges__heading">Challenges</h1>
+        <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
         <div className="challenges__column-headings-wrapper-lg">
-            <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title">Title</h2>
+            <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
             <h2 className="challenges__column-heading-lg">Season</h2>
-            <h2 className="challenges__column-heading-lg">Team/Solo</h2>
+            <h2 className="challenges__column-heading-lg" onClick={() => {sortColumns("team")}}>Team/Solo {sortConfig.key === "team" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
         </div>
         {
-            challenges.map((challenge) => {
+            renderedData.map((challenge) => {
                 return (
                 <Link to={`/challenges/${challenge.id}`} key={challenge.id} className="challenges__instance-link">
                     <div className="challenges__instance">
