@@ -58,3 +58,14 @@ $breakpoint-desktop: 1280px;
     margin-top: 0.5rem;
     width: 100%;
 }
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin nav-icons {
+    width: 1.5rem;
+    height: 1.5rem;
+    filter: invert(75%);
+}

@@ -1,0 +1,25 @@
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/colors" as *;
+
+.navbar {
+    width: 100vw;
+    background-color: $black;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+
+    &__home-wrapper, &__search-wrapper {
+        width: 50%;
+        @include flex-center;
+        padding: 1rem;
+    }
+
+    &__home, &__search {
+        @include nav-icons;
+    }
+
+}

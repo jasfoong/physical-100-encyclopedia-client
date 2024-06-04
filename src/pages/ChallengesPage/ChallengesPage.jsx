@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
-import Header from '../../components/Header/Header'
+import Navbar from '../../components/Navbar/Navbar'
 import './ChallengesPage.scss'
 
 const ChallengesPage = () => {
@@ -31,7 +31,7 @@ const ChallengesPage = () => {
 
     return (
         <>
-        <Header />
+        <Navbar />
         <section className="challenges">
         <h1 className="challenges__heading">Challenges</h1>
         <div className="challenges__column-headings-wrapper-lg">

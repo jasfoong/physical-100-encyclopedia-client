@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { axiosInstance } from '../../utils/apiClient'
-import Header from '../../components/Header/Header'
+import Navbar from '../../components/Navbar/Navbar'
 import EditForm from '../../components/EditForm/EditForm'
 import './ChallengeDetailsPage.scss'
 
@@ -54,7 +54,7 @@ const ContestantDetailsPage = () => {
 
     return (
         <>
-        <Header />
+        <Navbar />
         {isEditing ? (
             <EditForm 
                 challenge={challenge}
