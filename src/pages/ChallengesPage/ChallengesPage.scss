@@ -6,8 +6,20 @@
 .challenges {
     margin: 1rem;
 
+    @include tablet {
+        margin: 1rem 2rem;
+    }
+
+    @include desktop {
+        margin: 1rem 5rem;
+    }
+
     &__heading {
         @include table-heading-mobile;
+
+        @include desktop {
+            font-size: 2.5rem;
+        }
     }
 
     &__column-headings-wrapper-lg {
@@ -17,8 +29,21 @@
     &__column-heading-lg {
         @include table-subheadings-lg;
 
+        @include desktop {
+            font-size: 0.7rem;
+        }
+
         &--title {
             width: 55%;
+            padding-left: 0.5rem;
+
+            @include tablet {
+                width: 51%;
+            }
+
+            @include desktop {
+                width: 46%;
+            }
         }
     }
 
@@ -29,21 +54,45 @@
     &__instance {
         display: flex;
         align-items: center;
+        padding: 0.5rem;
+
+        @include desktop {
+            height: 5rem;
+        }
+
+        &:hover {
+            background-color: $dark-grey;
+        }
     }
 
     &__img {
         @include table-img-mobile;
+
+        @include desktop {
+            width: 4vw;
+            height: 4vw;
+            border-radius: 0.25rem;
+        }
     }
 
     &__text {
         @include table-text-mobile;
         color: $light-grey;
+
+        @include desktop {
+            font-size: 0.85rem;
+        }
     }
 
     &__name {
         @include table-text-mobile;
         color: white;
         width: 40%;
+        margin-left: 1rem;
         padding-right: 1rem;
+
+        @include desktop {
+            font-size: 0.85rem;
+        }
     }
 }
