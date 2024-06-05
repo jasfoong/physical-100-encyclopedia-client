@@ -25,13 +25,14 @@
 
     &__img {
         width: 95%;
-        height: 60vh;
+        height: 55%;
         object-fit: cover;
         border-radius: 0.25rem;
 
         @include tablet {
             border-radius: 0.35rem;
-            width: 30vw;
+            width: 40vw;
+            height: 100%;
         }
 
         &--sidebar-style {
