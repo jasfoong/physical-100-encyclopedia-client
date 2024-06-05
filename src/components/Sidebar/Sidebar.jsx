@@ -5,7 +5,7 @@ const Sidebar = ({ selectedContestant, closeSidebar }) => {
     return (
         <aside className="sidebar">
             <button className="sidebar__close-btn" onClick={closeSidebar}>X</button>
-            <ContestantDetailsPage contestant={selectedContestant}/>
+            <ContestantDetailsPage selectedContestant={selectedContestant} isInSidebar={true}/>
         </aside>
     )
 }

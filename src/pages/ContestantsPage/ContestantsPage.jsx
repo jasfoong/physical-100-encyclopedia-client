@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../../utils/apiClient'
+import { useContestants } from '../../contexts/ContestantContext';
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
@@ -8,8 +8,7 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import './ContestantsPage.scss'
 
 const ContestantsPage = () => {
-    const [fetchedContestants, setFetchedContestants] = useState([]);
-    const [fetchError, setFetchError] = useState(false);
+    const { contestants, loading, error } = useContestants();
     const [renderedContestants, setRenderedContestants] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [careerCategories, setCareerCategories] = useState([]);
@@ -17,21 +16,16 @@ const ContestantsPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchContestants = async () => {
-            try {
-                const { data } = await axiosInstance.get("/contestants");
-                setFetchedContestants(data);
-                setRenderedContestants(data)
-                
-                const uniqueCategories = [...new Set(data.map(contestant => contestant.career_category))];
-                setCareerCategories(uniqueCategories);
-            } catch (error) {
-                console.log(`Error retrieving contestants`, error);
-                setFetchError(true);
-            }
-        };
-        fetchContestants();
-    }, []);
+        if (contestants.length > 0) {
+            setRenderedContestants(contestants);
+
+            const uniqueCategories = [...new Set(contestants.map(contestant => contestant.career_category))];
+            setCareerCategories(uniqueCategories);
+        } else {
+            setRenderedContestants([])
+            setCareerCategories([])
+        }
+    }, [contestants]);
 
     const sortColumns = (key) => {
         let direction = "asc";
@@ -48,9 +42,9 @@ const ContestantsPage = () => {
 
     const filterContestants = (category) => {
         if (category === null) {
-            setRenderedContestants(fetchedContestants);
+            setRenderedContestants(contestants);
         } else {
-            const filteredContestants = fetchedContestants.filter(contestant => contestant.career_category === category)
+            const filteredContestants = contestants.filter(contestant => contestant.career_category === category)
             setRenderedContestants(filteredContestants);
         }
     };
@@ -67,11 +61,11 @@ const ContestantsPage = () => {
         setSelectedContestant(null)
     };
 
-    if (fetchedContestants.length === 0) {
+    if (loading) {
         return <h3 className="page-loading-text">Loading...</h3>
     };
 
-    if (fetchError === true) {
+    if (error) {
         return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the contestants. Please come back later.</p>
     };
 

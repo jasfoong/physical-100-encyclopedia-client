@@ -48,6 +48,7 @@ $breakpoint-desktop: 1280px;
     color: $light-grey;
     padding: 1rem 0.8rem;
     margin-left: auto;
+    cursor: pointer;
 }
 
 @mixin edit-inputs-mobile {

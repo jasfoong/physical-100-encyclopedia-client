@@ -1,72 +1,48 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { axiosInstance } from '../../utils/apiClient'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useContestants } from '../../contexts/ContestantContext';
 import Navbar from '../../components/Navbar/Navbar'
-import EditForm from '../../components/EditForm/EditForm';
 import './ContestantDetailsPage.scss'
 
-const ContestantDetailsPage = () => {
+const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
+    const navigate = useNavigate();
     const { id } = useParams();
-    const [contestant, setContestant] = useState({});
+    const { contestants, loading, error } = useContestants();
+    const [contestant, setContestant] = useState(selectedContestant || null);
     const [fetchError, setFetchError] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editError, setEditError] = useState(false);
 
     useEffect(() => {
-        const fetchContestant = async () => {
-            try {
-                const { data } = await axiosInstance.get(`/contestants/${id}`);
-                const fetchedContestant = data;
+        if (!selectedContestant && id) {
+            const fetchedContestant = contestants.find(contestant => contestant.id === parseInt(id))
 
-                if (JSON.stringify(fetchedContestant) !== JSON.stringify(contestant)) {
-                    setContestant(fetchedContestant);
-                }
-            } catch (error) {
-                console.log(`Error retrieving your contestant's information`, error);
-                setFetchError(true);
+            if (fetchedContestant) {
+                setContestant(fetchedContestant)
+            } else {
+                setFetchError(true)
             }
-        };
-        fetchContestant();
-    }, [id, contestant]);
+        } else {
+            setContestant(selectedContestant)
+        }
+    }, [selectedContestant, id, contestants])
         
     const handleEditClick = () => {
-        setIsEditing(true);
+        navigate(`/contestants/${contestant.id}/edit`)
     };
 
-    const updateContestant = async (updatedContestant) => {
-        try {
-            await axiosInstance.put(`/contestants/${id}`, updatedContestant);
-            setContestant(updatedContestant);
-            setIsEditing(false);
-        } catch (error) {
-            console.log(`Could not update contestant`, error);
-            setEditError(true);
-        }
-    };
-
-    if (!contestant) {
+    if (loading) {
         return <h3 className="page-loading-text">Loading...</h3>
-    };
+    }
 
-    if (fetchError === true) {
+    if (error || fetchError || !contestant) {
         return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving your contestant's information. Please come back later.</p>
-    };
+    }
 
     return (
         <>
-        <Navbar />
-        {isEditing ? (
-            <EditForm 
-                contestant={contestant}
-                setIsEditing={setIsEditing}
-                updateContestant={updateContestant}
-                editError={editError}
-                setEditError={setEditError}
-            />
-        ) : (
-            <section className="contestant">
+        { !isInSidebar && <Navbar /> }
+            <section className={`contestant ${isInSidebar && "contestant--sidebar-style"}`}>
                 <div className="contestant--left">
-                    <img className="contestant__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
+                    <img className={`contestant__img ${isInSidebar && "contestant__img--sidebar-style"}`} src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
                 </div>
                 <div className="contestant--right">
                     <h1 className="contestant__name">{contestant.name}</h1>
@@ -74,7 +50,6 @@ const ContestantDetailsPage = () => {
                 </div>
                 <button className="contestant__edit-btn" onClick={handleEditClick}>Edit</button>
             </section>
-        )}
         </>
     )
 }
