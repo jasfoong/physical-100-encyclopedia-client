@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
+import Sidebar from '../../components/Sidebar/Sidebar'
 import './ContestantsPage.scss'
 
 const ContestantsPage = () => {
-    const [contestants, setContestants] = useState([]);
+    const [fetchedContestants, setFetchedContestants] = useState([]);
     const [fetchError, setFetchError] = useState(false);
-    const [renderedData, setRenderedData] = useState([]);
+    const [renderedContestants, setRenderedContestants] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [careerCategories, setCareerCategories] = useState([]);
+    const [selectedContestant, setSelectedContestant] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchContestants = async () => {
             try {
                 const { data } = await axiosInstance.get("/contestants");
-                setContestants(data);
-                setRenderedData(data)
+                setFetchedContestants(data);
+                setRenderedContestants(data)
                 
                 const uniqueCategories = [...new Set(data.map(contestant => contestant.career_category))];
                 setCareerCategories(uniqueCategories);
@@ -34,31 +37,43 @@ const ContestantsPage = () => {
         let direction = "asc";
         if (sortConfig.key === key && sortConfig.direction === "asc") direction = "desc";
 
-        const sortedData = sortArray([...renderedData], {
+        const sortedData = sortArray([...renderedContestants], {
             by: key,
             order: direction
         });
 
-        setRenderedData(sortedData);
+        setRenderedContestants(sortedData);
         setSortConfig({ key, direction });
     };
 
     const filterContestants = (category) => {
         if (category === null) {
-            setRenderedData(contestants);
+            setRenderedContestants(fetchedContestants);
         } else {
-            const filteredContestants = contestants.filter(contestant => contestant.career_category === category)
-            setRenderedData(filteredContestants);
+            const filteredContestants = fetchedContestants.filter(contestant => contestant.career_category === category)
+            setRenderedContestants(filteredContestants);
         }
     };
-        
-    if (contestants.length === 0) {
+      
+    const handleContestantClick = (contestant) => {
+        if (window.innerWidth >= 1280) {
+            setSelectedContestant(contestant)
+        } else {
+            navigate(`/contestants/${contestant.id}`)
+        }
+    };
+
+    const closeSidebar = () => {
+        setSelectedContestant(null)
+    };
+
+    if (fetchedContestants.length === 0) {
         return <h3 className="page-loading-text">Loading...</h3>
-    }
+    };
 
     if (fetchError === true) {
         return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the contestants. Please come back later.</p>
-    }
+    };
 
     return (
         <>
@@ -72,20 +87,19 @@ const ContestantsPage = () => {
             <h3 className="contestants__column-heading-lg">Career</h3>
         </div>
         {
-            renderedData.map((contestant) => {
+            renderedContestants.map((contestant) => {
                 return (
-                <Link to={`/contestants/${contestant.id}`} className="contestants__instance-link">
-                <div className="contestants__instance" key={contestant.id}>
-                    <img className="contestants__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt="contestant context"/>
+                <div className="contestants__instance" key={contestant.id} onClick={() => handleContestantClick(contestant)}>
+                    <img className="contestants__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
                     <h4 className="contestants__text contestants__name">{contestant.name}</h4>
                     <h4 className="contestants__text">Season {contestant.season}</h4>
                     <h4 className="contestants__text">{contestant.career}</h4>
                 </div>
-                </Link>
                 )
             })
         }
         </section>
+        {selectedContestant && <Sidebar selectedContestant={selectedContestant} closeSidebar={closeSidebar}/>}
         </>
     )
 }

@@ -66,7 +66,7 @@ const ContestantDetailsPage = () => {
         ) : (
             <section className="contestant">
                 <div className="contestant--left">
-                    <img className="contestant__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt="contestant portrait"/>
+                    <img className="contestant__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
                 </div>
                 <div className="contestant--right">
                     <h1 className="contestant__name">{contestant.name}</h1>
