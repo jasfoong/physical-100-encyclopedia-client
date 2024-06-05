@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { axiosInstance } from '../../utils/apiClient'
 import Navbar from '../../components/Navbar/Navbar'
-import EditForm from '../../components/EditForm/EditForm'
+import EditChallengeForm from '../../components/EditChallengeForm/EditChallengeForm'
 import './ChallengeDetailsPage.scss'
 
 const ContestantDetailsPage = () => {
@@ -56,7 +56,7 @@ const ContestantDetailsPage = () => {
         <>
         <Navbar />
         {isEditing ? (
-            <EditForm 
+            <EditChallengeForm 
                 challenge={challenge}
                 setIsEditing={setIsEditing}
                 updateChallenge={updateChallenge}

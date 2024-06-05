@@ -3,11 +3,20 @@
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/global" as *;
 
-.edit-form {
+.edit-challenge-form {
     margin: 1rem;
 
     @include tablet {
         flex: 1;
+    }
+
+    &__heading {
+        @include table-heading-mobile;
+
+        @include desktop {
+            font-size: 2.5rem;
+            margin-left: 5%;
+        }
     }
 
     &__section {
