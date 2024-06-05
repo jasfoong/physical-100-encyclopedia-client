@@ -31,7 +31,6 @@
 
         @include desktop {
             font-size: 0.7rem;
-            cursor: pointer;
         }
 
         &--name {
@@ -43,6 +42,7 @@
 
             @include desktop {
                 width: 46%;
+                cursor: pointer;
             }
         }
     }
@@ -58,6 +58,7 @@
 
         @include desktop {
             height: 5rem;
+            cursor: pointer;
         }
 
         &:hover {
@@ -93,5 +94,28 @@
         @include desktop {
             font-size: 0.85rem;
         }
+    }
+
+    &__sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 40vw;
+        height: 100%;
+        background-color: $dark-grey;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+        padding: 1.25rem;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    &__close-sidebar {
+        align-self: flex-end;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 1.5rem;
+        color: white;
     }
 }
