@@ -1,0 +1,59 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.contestant-stats {
+    margin: 15% 10%;
+    background-color: #232323;
+    border-radius: 0.45rem;
+
+    &__heading {
+        @include table-heading-mobile;
+        padding: 10% 0 0 6%;
+        font-size: 1.5rem;
+    }
+
+    &__stats-wrapper {
+        padding: 0 5% 9% 5%;
+    }
+
+    &__instance {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &__label {
+        color: $light-grey;
+        font-size: 1rem;
+        font-weight: 300;
+        margin-block: 0;
+    }
+
+    &__data {
+        color: white;
+        font-size: 3rem;
+        font-weight: 600;
+    }
+
+    &__specialty-wrapper {
+        background-color: rgb(110, 39, 39);
+        border-radius: 0 0 0.45rem 0.45rem;
+        padding: 5%;
+    }
+
+    &__specialty-instance {
+        display: inline-block;
+    }
+
+    &__specialty-label {
+        margin-bottom: 0.8rem;
+    }
+
+    &__specialty-data {
+        font-size: 1.35rem;
+        text-transform: uppercase;
+    }
+}
