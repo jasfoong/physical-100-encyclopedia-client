@@ -10,12 +10,12 @@
 
     &__heading {
         @include table-heading-mobile;
-        padding: 10% 0 0 6%;
+        padding: 10% 0 0 8%;
         font-size: 1.5rem;
     }
 
     &__stats-wrapper {
-        padding: 0 5% 9% 5%;
+        padding: 0 8% 9% 8%;
     }
 
     &__instance {
@@ -23,25 +23,44 @@
         align-items: center;
         gap: 0.75rem;
         margin-bottom: 0.5rem;
+        flex-wrap: wrap;
     }
 
     &__label {
         color: $light-grey;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 300;
         margin-block: 0;
+
+        @include desktop {
+            font-size: 1.1rem;
+        }
+
+        &--sidebar {
+            font-size: 0.8rem;
+        }
     }
 
-    &__data {
-        color: white;
-        font-size: 3rem;
-        font-weight: 600;
+    &__bar {
+        background-color: $light-grey;
+        border-radius: 0.2rem;
+        overflow: hidden;
+        height: 0.625rem;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    &__bar-fill {
+        background-color: $ruby;
+        height: 100%;
+        width: 0; 
+        transition: width 0.3s ease;
     }
 
     &__specialty-wrapper {
         background-color: rgb(110, 39, 39);
         border-radius: 0 0 0.45rem 0.45rem;
-        padding: 5%;
+        padding: 6% 8%;
     }
 
     &__specialty-instance {
@@ -55,5 +74,19 @@
     &__specialty-data {
         font-size: 1.35rem;
         text-transform: uppercase;
+
+        @include desktop {
+            font-size: 2rem;
+        }
+    }
+
+    &__data {
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+
+        &--sidebar {
+            font-size: 1.5rem;
+        }
     }
 }

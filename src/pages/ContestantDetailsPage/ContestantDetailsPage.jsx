@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContestants } from '../../contexts/ContestantContext';
 import Navbar from '../../components/Navbar/Navbar'
+import ContestantStats from '../../components/ContestantStats/ContestantStats';
 import './ContestantDetailsPage.scss'
 
 const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
@@ -50,6 +51,7 @@ const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
                 </div>
                 <button className="contestant__edit-btn" onClick={handleEditClick}>Edit</button>
             </section>
+            <ContestantStats selectedContestant={selectedContestant} isInSidebar={isInSidebar}/>
         </>
     )
 }
