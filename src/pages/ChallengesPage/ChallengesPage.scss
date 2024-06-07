@@ -23,7 +23,11 @@
     }
 
     &__column-headings-wrapper-lg {
-        display: flex;
+        display: none;
+
+        @include tablet {
+            display: flex;
+        }
     }
 
     &__column-heading-lg {
@@ -53,7 +57,6 @@
 
     &__instance {
         display: flex;
-        align-items: center;
         padding: 0.5rem;
 
         @include desktop {
@@ -78,6 +81,7 @@
     &__text {
         @include table-text-mobile;
         color: $light-grey;
+        margin-block-start: 0.55em;
 
         @include desktop {
             font-size: 0.85rem;
