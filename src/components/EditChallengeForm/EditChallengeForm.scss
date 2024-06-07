@@ -12,10 +12,10 @@
 
     &__heading {
         @include table-heading-mobile;
+        margin-left: 5%;
 
         @include desktop {
             font-size: 2.5rem;
-            margin-left: 5%;
         }
     }
 
@@ -25,10 +25,6 @@
         @include tablet {
             display: flex;
             align-items: center;
-        }
-
-        @include desktop {
-            margin-top: 15%;
         }
     }
 
@@ -87,6 +83,10 @@
         justify-content: flex-end;
         width: 50%;
         margin-left: auto;
+
+        @include tablet {
+            width: 35%;
+        }
 
         @include desktop {
             width: 25%;
