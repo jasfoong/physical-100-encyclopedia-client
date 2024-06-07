@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { ContestantProvider } from "./contexts/ContestantContext";
-import "./App.scss";
 import ContestantsPage from "./pages/ContestantsPage/ContestantsPage"
-import ChallengesPage from "./pages/ChallengesPage/ChallengesPage"
 import ContestantDetailsPage from "./pages/ContestantDetailsPage/ContestantDetailsPage"
-import ChallengeDetailsPage from "./pages/ChallengeDetailsPage/ChallengeDetailsPage"
 import EditContestantForm from './pages/EditContestantForm/EditContestantForm'
+import ChallengesPage from "./pages/ChallengesPage/ChallengesPage"
+import ChallengeDetailsPage from "./pages/ChallengeDetailsPage/ChallengeDetailsPage"
+import StatsPage from "./pages/StatsPage/StatsPage";
 import Error404Page from "./pages/Error404Page/Error404Page"
+import "./App.scss";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/contestants/:id/edit" element={<EditContestantForm />} />
             <Route path="/challenges" element={<ChallengesPage />} />
             <Route path="/challenges/:id" element={<ChallengeDetailsPage />} />
+            <Route path="/stats" element={<StatsPage />} />
             <Route path="*" element={<Error404Page />} />
           </Routes>
         </ContestantProvider>
