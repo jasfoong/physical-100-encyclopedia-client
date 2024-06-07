@@ -67,6 +67,10 @@ const EditContestantForm = () => {
 
     const handleCancelClick = () => {
         navigate(`/contestants/${id}`);
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
     };
 
     if (loading) {
@@ -86,7 +90,7 @@ const EditContestantForm = () => {
     <section className="edit-contestant-form__section">
     <div className="edit-contestant-form__img-wrapper">
         {contestant && (
-            <img className="edit-form__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={`portrait of ${contestant.name}`}/>
+            <img className="edit-contestant-form__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={`portrait of ${contestant.name}`}/>
         )}
     </div>
     <form className="edit-contestant-form" onSubmit={handleFormSubmit}>
@@ -111,12 +115,12 @@ const EditContestantForm = () => {
             name="description"
             value={formData.description} 
             onChange={handleInputChange} />
-          {inputErrors.description && <h5 className="edit-form__error-text">{inputErrors.description}</h5>}
+          {inputErrors.description && <h5 className="edit-contestant-form__error-text">{inputErrors.description}</h5>}
         </div>
         {
             editError === true && <p>Sorry, our servers could not make the changes you requested. Please try again later.</p>
         }
-        <div className="edit-form__btns-wrapper">
+        <div className="edit-contestant-form__btns-wrapper">
             <button className="edit-contestant-form__btn" type="submit">Publish</button>
             <button className="edit-contestant-form__btn" type="button" onClick={handleCancelClick}>Cancel</button>
         </div>

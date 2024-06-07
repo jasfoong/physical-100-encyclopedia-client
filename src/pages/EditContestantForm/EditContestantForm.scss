@@ -16,10 +16,10 @@
 
     &__heading {
         @include table-heading-mobile;
+        margin-left: 5%;
 
         @include desktop {
             font-size: 2.5rem;
-            margin-left: 5%;
         }
     }
 
@@ -92,8 +92,12 @@
         width: 50%;
         margin-left: auto;
 
+        @include tablet {
+            width: 35%;
+        }
+
         @include desktop {
-            width: 25%;
+            width: 30%;
         }
     }
 
