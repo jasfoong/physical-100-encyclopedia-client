@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContestants } from '../../contexts/ContestantContext';
 import { axiosInstance } from '../../utils/apiClient'
+import Navbar from '../../components/Navbar/Navbar';
 import './EditContestantForm.scss'
 
 const EditContestantForm = () => {
@@ -86,6 +87,7 @@ const EditContestantForm = () => {
   
     return (
     <>
+    <Navbar />
     <h1 className="edit-contestant-form__heading"> Edit Contestant</h1>
     <section className="edit-contestant-form__section">
     <div className="edit-contestant-form__img-wrapper">
