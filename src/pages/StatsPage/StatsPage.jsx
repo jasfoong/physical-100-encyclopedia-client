@@ -13,13 +13,13 @@ const StatsPage = () => {
     useEffect(() => {
         if (contestants.length > 0) {
             const sortedByStrength = [...contestants].sort((a, b) => b.stats.strength - a.stats.strength);
-            setContestantsByStrength(sortedByStrength.slice(0, 5))
+            setContestantsByStrength(sortedByStrength.slice(0, 10))
     
             const sortedByEndurance = [...contestants].sort((a, b) => b.stats.endurance - a.stats.endurance);
-            setContestantsByEndurance(sortedByEndurance.slice(0, 5))
+            setContestantsByEndurance(sortedByEndurance.slice(0, 10))
 
             const sortedBySpeed = [...contestants].sort((a, b) => b.stats.speed - a.stats.speed)
-            setContestantsBySpeed(sortedBySpeed.slice(0, 5))
+            setContestantsBySpeed(sortedBySpeed.slice(0, 10))
         }
     }, [contestants])
 
@@ -98,8 +98,6 @@ const StatsPage = () => {
                 })}
             </table>
         </div>
-        {/* <aside>news API - display beneath tables</aside> */}
-
         </section>
         </>
     )

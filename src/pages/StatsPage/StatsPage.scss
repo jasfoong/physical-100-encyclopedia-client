@@ -10,6 +10,10 @@ body {
 .stats {
     margin: 1rem;
 
+    @include tablet {
+        margin: 3rem;
+    }
+
     @include desktop {
         margin: 5rem;
     }
@@ -89,7 +93,7 @@ body {
         @include desktop {
             font-size: 0.85rem;
         }
-        
+
         &-score {
             text-align: right;
         }

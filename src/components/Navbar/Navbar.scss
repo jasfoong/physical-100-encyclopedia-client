@@ -12,17 +12,18 @@
     right: 0;
     z-index: 5;
 
-    &__home-wrapper, &__challenge-wrapper {
-        width: 50%;
+    &__contestant-wrapper, &__challenge-wrapper, &__stat-wrapper {
+        width: 33%;
         @include flex-center;
         padding: 1rem;
     }
 
-    &__home, &__challenge {
+    &__contestant, &__challenge, &__stat {
         @include nav-icons;
 
         @include desktop {
             margin-right: 1.25rem;
+            margin-top: 2%;
             filter: invert(100%);
         }
     }
