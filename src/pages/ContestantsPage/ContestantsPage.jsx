@@ -5,6 +5,7 @@ import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
 import Sidebar from '../../components/Sidebar/Sidebar'
+import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ContestantsPage.scss'
 
 const ContestantsPage = () => {
@@ -13,6 +14,7 @@ const ContestantsPage = () => {
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [careerCategories, setCareerCategories] = useState([]);
     const [selectedContestant, setSelectedContestant] = useState(null);
+    const [scrollVisible, setScrollVisible] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,7 +27,24 @@ const ContestantsPage = () => {
             setRenderedContestants([])
             setCareerCategories([])
         }
+
+        window.addEventListener("scroll", handleScrollVisible)
     }, [contestants]);
+
+    const handleScrollVisible = () => {
+        if (window.scrollY > 100) {
+            setScrollVisible(true)
+        } else {
+            setScrollVisible(false)
+        }
+    };
+
+    const handleScrollClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    };
 
     const sortColumns = (key) => {
         let direction = "asc";
@@ -94,6 +113,11 @@ const ContestantsPage = () => {
                 })
             }
             </section>
+            {scrollVisible && (
+                <div className="contestants__scroll-to-top-wrapper" onClick={handleScrollClick}>
+                <img className="contestants__scroll-to-top" src={scrollUpIcon} alt="up arrow"/>
+                </div>
+            )}
         </div>
         {selectedContestant && <Sidebar selectedContestant={selectedContestant} closeSidebar={closeSidebar}/>}
         </main>

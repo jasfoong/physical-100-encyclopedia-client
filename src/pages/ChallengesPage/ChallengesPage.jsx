@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
+import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ChallengesPage.scss'
 
 const ChallengesPage = () => {
@@ -10,6 +11,7 @@ const ChallengesPage = () => {
     const [fetchError, setFetchError] = useState(false);
     const [renderedData, setRenderedData] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
+    const [scrollVisible, setScrollVisible] = useState(false);
 
     useEffect(() => {
         const fetchChallenges = async () => {
@@ -23,7 +25,24 @@ const ChallengesPage = () => {
             }
         };
         fetchChallenges();
+
+        window.addEventListener("scroll", handleScrollVisible)
     }, []);
+
+    const handleScrollVisible = () => {
+        if (window.scrollY > 100) {
+            setScrollVisible(true)
+        } else {
+            setScrollVisible(false)
+        }
+    };
+
+    const handleScrollClick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    };
 
     const sortColumns = (key) => {
         let direction = "asc";
@@ -78,6 +97,11 @@ const ChallengesPage = () => {
                 )
             })
         }
+        {scrollVisible && (
+            <div className="challenges__scroll-to-top-wrapper" onClick={handleScrollClick}>
+                <img className="challenges__scroll-to-top" src={scrollUpIcon} alt="up arrow"/>
+            </div>
+        )}
         </section>
         </>
     )

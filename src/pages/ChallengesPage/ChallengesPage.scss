@@ -64,7 +64,7 @@
         }
 
         &:hover {
-            background-color: $dark-grey;
+            background-color: rgb(83, 83, 83, 0.4);
         }
     }
 
@@ -98,5 +98,27 @@
         @include desktop {
             font-size: 0.85rem;
         }
+    }
+
+    &__scroll-to-top-wrapper {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 0.35rem;
+        margin: 0 3rem 5rem 0;
+        background-color: rgb(164, 163, 163, 0.2);
+
+        @include desktop {
+            margin: 0 3rem 3rem 0;
+            background: none;
+        }
+    }
+        
+        &__scroll-to-top {
+            filter: invert(100%);
+            width: 2rem;
+            height: 2rem;
     }
 }
