@@ -70,31 +70,33 @@ const ContestantsPage = () => {
     };
 
     return (
-        <>
-        <Navbar />
-        <section className="contestants">
-        <Link to="/"><h1 className="contestants__heading">Contestants</h1></Link>
-        <FilterChips careerCategories={careerCategories} filterContestants={filterContestants}/>
-        <div className="contestants__column-headings-wrapper-lg">
-            <h3 onClick={() => {sortColumns("name")}}className="contestants__column-heading-lg contestants__column-heading-lg--name">Name {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h3>
-            <h3 className="contestants__column-heading-lg">Season</h3>
-            <h3 className="contestants__column-heading-lg">Career</h3>
+        <main className={`contestants__wrapper ${selectedContestant && "contestants__wrapper--sidebar-open"}`}>
+        <div className={`contestants__main ${selectedContestant && "contestants__main--sidebar-open"}`}>
+            <Navbar />
+            <section className="contestants">
+            <Link to="/"><h1 className="contestants__heading">Contestants</h1></Link>
+            <FilterChips careerCategories={careerCategories} filterContestants={filterContestants}/>
+            <div className="contestants__column-headings-wrapper-lg">
+                <h3 onClick={() => {sortColumns("name")}}className="contestants__column-heading-lg contestants__column-heading-lg--name">Name {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h3>
+                <h3 className="contestants__column-heading-lg">Season</h3>
+                <h3 className="contestants__column-heading-lg">Career</h3>
+            </div>
+            {
+                renderedContestants.map((contestant) => {
+                    return (
+                    <div className="contestants__instance" key={contestant.id} onClick={() => handleContestantClick(contestant)}>
+                        <img className="contestants__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
+                        <h4 className="contestants__text contestants__name">{contestant.name}</h4>
+                        <h4 className="contestants__text">Season {contestant.season}</h4>
+                        <h4 className="contestants__text">{contestant.career}</h4>
+                    </div>
+                    )
+                })
+            }
+            </section>
         </div>
-        {
-            renderedContestants.map((contestant) => {
-                return (
-                <div className="contestants__instance" key={contestant.id} onClick={() => handleContestantClick(contestant)}>
-                    <img className="contestants__img" src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
-                    <h4 className="contestants__text contestants__name">{contestant.name}</h4>
-                    <h4 className="contestants__text">Season {contestant.season}</h4>
-                    <h4 className="contestants__text">{contestant.career}</h4>
-                </div>
-                )
-            })
-        }
-        </section>
         {selectedContestant && <Sidebar selectedContestant={selectedContestant} closeSidebar={closeSidebar}/>}
-        </>
+        </main>
     )
 }
 

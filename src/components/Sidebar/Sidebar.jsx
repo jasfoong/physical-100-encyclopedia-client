@@ -1,5 +1,4 @@
 import ContestantDetailsPage from '../../pages/ContestantDetailsPage/ContestantDetailsPage';
-import ContestantStats from '../ContestantStats/ContestantStats'
 import './Sidebar.scss'
 
 const Sidebar = ({ selectedContestant, closeSidebar }) => {
