@@ -11,33 +11,19 @@ The web app is an immersion into the world of all things Physical 100. Users can
 
 ## Features
 
-**View All Contestants**
+- **View All Contestants**: Browse a list of all contestants, with options to sort alphabetically or by career category
 
-- Browse a list of all contestants, with options to sort alphabetically or by career category
+- **View Contestant Details**: Access detailed information about each contestant, including their stats and an article with additional information about them
 
-**View Contestant Details**
+- **Edit Contestant Information**: Update a contestant's name and description directly from their details page
 
-- Access detailed information about each contestant, including their stats and an article with additional information about them
+- **View All Challenges**: Browse a list of all challenges, with options to sort by name or type (team/solo)
 
-**Edit Contestant Information**
+- **Edit Challenge Information**: Update a challenge's title and description directly from their details page
 
-- Update a contestant's name and description directly from their details page
+- **View Contestant Stats**: View individual stats on contestant detail pages or a stats overview page
 
-**View All Challenges**
-
-- Browse a list of all challenges, with options to sort by name or type (team/solo)
-
-**Edit Challenge Information**
-
-- Update a challenge's title and description directly from their details page
-
-**View Contestant Stats**
-
-- View individual stats on contestant detail pages or a stats overview page
-
-**Responsive Design**
-
-- Enjoy a seamless, thoughtful experience on all screen sizes
+- **Responsive Design**: Enjoy a seamless, thoughtful experience on all screen sizes
 ## Tech Stack
 
 **Client:** React, Axios
@@ -101,3 +87,10 @@ What to expect when you've successfully set up the client and server.
 
 ### Stats Overview Page
 ![](/src/assets/screenshots/stats.png)
+
+
+# Next Steps
+Thank you in advance for the feedback on my first React project. 
+
+In future iterations, I will be further developing the site with contestant and challenge data as new seasons of the show are released. 
+I also hope to release a public poll where visitors to my site can vote on contestants' stats.
