@@ -43,7 +43,7 @@ Follow these steps to get the client up and running:
   ```
   git clone https://github.com/jasfoong/physical-100-encyclopedia-client.git
 
-  cd physical-100-client
+  cd physical-100-encyclopedia-client
   ```
 
 **Install dependencies**
