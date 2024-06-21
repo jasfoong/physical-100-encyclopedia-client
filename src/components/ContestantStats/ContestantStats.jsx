@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useContestants } from '../../contexts/ContestantContext';
 import './ContestantStats.scss'
+import WinsAndLosses from '../WinsAndLosses/WinsAndLosses';
 
 const ContestantStats = ({ selectedContestant, isInSidebar }) => {
     const { id } = useParams();
@@ -57,15 +58,8 @@ const ContestantStats = ({ selectedContestant, isInSidebar }) => {
                         <div className="contestant-stats__bar-fill" style={{ width: `${contestant.stats.speed}%` }}></div>
                     </div>
                 </div>
-                <div className="contestant-stats__instance">
-                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.wins}</span>
-                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Wins</h5>
-                </div>
-                <div className="contestant-stats__instance">
-                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.losses}</span>
-                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Losses</h5>
-                </div>
             </div>
+            <WinsAndLosses selectedContestant={selectedContestant} isInSidebar={isInSidebar}/>
             <div className="contestant-stats__specialty-wrapper">
                 <div className="contestant-stats__instance contestant-stats__specialty-instance">
                     <h5 className={`contestant-stats__label contestant-stats__specialty-label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Specialty</h5>

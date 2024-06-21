@@ -1,0 +1,45 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.wins, .losses {
+    padding: 0 8% 2% 8%;
+    color: white;
+
+    &__label {
+        font-size: 1.5rem;
+
+        &--sidebar {
+            @include table-heading-mobile;
+            font-size: 1.5rem;
+            margin-top: 5%;
+            margin-block-end: 10%;
+        }
+    }
+
+    &__list-wrapper {
+        list-style-type: none;
+        padding-inline-start: 0;
+    }
+
+    &__list-item {
+        color: $light-grey;
+        font-size: 1rem;
+        margin-top: 2.5%;
+
+        @include desktop {
+            font-size: 1.1rem;
+        }
+        
+        &--sidebar {
+            color: $light-grey;
+            font-size: 0.9rem;
+            margin-top: 5%;
+        }
+    }
+}
+
+.losses {
+    padding-bottom: 9%;
+}
