@@ -32,11 +32,19 @@
             font-size: 1.1rem;
         }
         
+        &--link {
+            border-bottom: 1px solid $ruby;
+            padding-bottom: 0.5%;
+            cursor: pointer;
+            color: $light-grey;
+        }
+        
         &--sidebar {
             color: $light-grey;
             font-size: 0.9rem;
             margin-top: 5%;
         }
+
     }
 }
 

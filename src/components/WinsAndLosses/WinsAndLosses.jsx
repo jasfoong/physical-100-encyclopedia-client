@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient';
 import './WinsAndLosses.scss'
 
@@ -15,7 +15,8 @@ const WinsAndLosses = ({ selectedContestant, isInSidebar }) => {
         const fetchChallengesWon = async () => {
             try {
                 const { data } = await axiosInstance.get(`/challenges-won/${contestantId}`);
-                setChallengesWon(data)
+                setChallengesWon(data);
+                console.log(data);
             } catch (error) {
                 console.log(`Error retrieving challenges won`, error);
                 setFetchError(true)
@@ -26,6 +27,7 @@ const WinsAndLosses = ({ selectedContestant, isInSidebar }) => {
             try {
                 const { data } = await axiosInstance.get(`/challenges-lost/${contestantId}`);
                 setChallengesLost(data);
+                console.log(data);
             } catch (error) {
                 console.log(`Error retrieving challenges lost`, error);
                 setFetchError(true)
@@ -37,11 +39,11 @@ const WinsAndLosses = ({ selectedContestant, isInSidebar }) => {
     }, [contestantId])
 
     
-    if (challengesWon.length === 0 && challengesLost.length === 0) {
+    if (!challengesWon || !challengesLost) {
         return <h3 className="page-loading-text">Loading...</h3>
     }
     
-    if (fetchError === true) {
+    if (fetchError.won || fetchError.lost) {
         return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
     }
 
@@ -55,7 +57,7 @@ const WinsAndLosses = ({ selectedContestant, isInSidebar }) => {
                     <ul className="wins__list-wrapper">
                     {challengesWon.map((challenge) => 
                         (
-                            <li key={challenge.id} className={`wins__list-item ${isInSidebar && `wins__list-item--sidebar`}`}>{challenge.name}</li>
+                            <li key={challenge.id} className={`wins__list-item ${isInSidebar && `wins__list-item--sidebar`}`}><Link to={`/challenges/${challenge.id}`} className="wins__list-item--link">{challenge.name}</Link></li>
                         )
                     )}
                     </ul>
@@ -69,7 +71,7 @@ const WinsAndLosses = ({ selectedContestant, isInSidebar }) => {
                     <ul className="losses__list-wrapper">
                     {challengesLost.map((challenge) => 
                         (
-                            <li key={challenge.id} className={`losses__list-item ${isInSidebar && `losses__list-item--sidebar`}`}>{challenge.name}</li>
+                            <li key={challenge.id} className={`losses__list-item ${isInSidebar && `losses__list-item--sidebar`}`}><Link to={`/challenges/${challenge.id}`} className="losses__list-item--link">{challenge.name}</Link></li>
                         )
                     )}
                     </ul>
