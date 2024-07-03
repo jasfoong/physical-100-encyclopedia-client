@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { axiosInstance } from '../../utils/apiClient'
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
+import FilterChips from '../../components/FilterChips/FilterChips';
 import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ChallengesPage.scss'
 
@@ -64,6 +65,19 @@ const ChallengesPage = () => {
         setRenderedData(sortedData);
         setSortConfig({ key, direction });
     };
+
+    const filterChallenges = (challengeType) => {
+        if (challengeType === "team") {
+            const teamChallenges = challenges.filter(challenge => challenge.team === 1);
+            setRenderedData(teamChallenges);
+            console.log(`team Challenges`, teamChallenges)
+        } else if (challengeType === "solo") {
+            const soloChallenges = challenges.filter(challenge => challenge.team === 0);
+            setRenderedData(soloChallenges);
+        } else {
+            setRenderedData(challenges);
+        }
+    }
         
     if (challenges.length === 0) {
         return <h3 className="page-loading-text">Loading...</h3>
@@ -78,10 +92,11 @@ const ChallengesPage = () => {
         <Navbar />
         <section className="challenges">
         <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
+        <FilterChips challenges={challenges} filterChallenges={filterChallenges}/>
         <div className="challenges__column-headings-wrapper-lg">
             <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
             <h2 className="challenges__column-heading-lg">Season</h2>
-            <h2 className="challenges__column-heading-lg" onClick={() => {sortColumns("team")}}>Team/Solo {sortConfig.key === "team" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
+            <h2 className="challenges__column-heading-lg">Team/Solo</h2>
         </div>
         {
             renderedData.map((challenge) => {
