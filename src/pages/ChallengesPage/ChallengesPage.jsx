@@ -84,7 +84,12 @@ const ChallengesPage = () => {
     }
 
     if (fetchError === true) {
-        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
+        return (
+            <>
+            <Navbar />
+            <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenges. Please come back later.</p>
+            </>
+        )
     }
 
     return (

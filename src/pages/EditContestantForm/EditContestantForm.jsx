@@ -79,9 +79,12 @@ const EditContestantForm = () => {
     };
 
     if (error || fetchError) {
-        console.log(`Context Error`, error);
-        console.log(`Fetch Error`, fetchError);
-        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving your contestant's information. Please come back later.</p>
+        return (
+            <>
+            <Navbar />
+            <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving your contestant's information. Please come back later.</p>
+            </>
+        )
     };
 
   

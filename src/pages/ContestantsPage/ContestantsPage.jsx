@@ -85,7 +85,12 @@ const ContestantsPage = () => {
     };
 
     if (error) {
-        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the contestants. Please come back later.</p>
+        return (
+            <>
+            <Navbar />
+            <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the contestants. Please come back later.</p>
+            </>
+        )
     };
 
     return (

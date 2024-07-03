@@ -30,7 +30,12 @@ const ContestantStats = ({ selectedContestant, isInSidebar }) => {
     }
 
     if (error || fetchError || !contestant) {
-        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving your contestant's information. Please come back later.</p>
+        return (
+            <>
+            <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving your contestant's information. Please come back later.</p>
+            <Link to="/"><h1 className="fetch-error-text fetch-error-text--link">Return to home</h1></Link>
+            </>
+        )
     }
 
     return (

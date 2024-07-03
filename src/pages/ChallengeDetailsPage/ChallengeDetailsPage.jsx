@@ -49,7 +49,12 @@ const ContestantDetailsPage = () => {
     }
 
     if (fetchError === true) {
-        return <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenge information. Please come back later.</p>
+        return (
+            <>
+            <Navbar />
+            <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenge information. Please come back later.</p>
+            </>
+        )
     }
 
     return (
