@@ -5,7 +5,6 @@ import ContestantDetailsPage from "./pages/ContestantDetailsPage/ContestantDetai
 import EditContestantForm from './pages/EditContestantForm/EditContestantForm'
 import ChallengesPage from "./pages/ChallengesPage/ChallengesPage"
 import ChallengeDetailsPage from "./pages/ChallengeDetailsPage/ChallengeDetailsPage"
-import StatsPage from "./pages/StatsPage/StatsPage";
 import Error404Page from "./pages/Error404Page/Error404Page"
 import "./App.scss";
 
@@ -20,7 +19,6 @@ function App() {
             <Route path="/contestants/:id/edit" element={<EditContestantForm />} />
             <Route path="/challenges" element={<ChallengesPage />} />
             <Route path="/challenges/:id" element={<ChallengeDetailsPage />} />
-            <Route path="/stats" element={<StatsPage />} />
             <Route path="*" element={<Error404Page />} />
           </Routes>
         </ContestantProvider>
