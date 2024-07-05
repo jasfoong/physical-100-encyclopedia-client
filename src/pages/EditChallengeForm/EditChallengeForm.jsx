@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useChallenges } from '../../contexts/ChallengeContext';
 import { axiosInstance } from '../../utils/apiClient'
+import Navbar from '../../components/Navbar/Navbar';
 import './EditChallengeForm.scss'
 
-const EditChallengeForm = ({ challenge, setIsEditing, updateChallenge, editError, setEditError }) => {
+const EditChallengeForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { challenges, loadingChallenge, errorChallenge, setChallenges } = useChallenges();
+  const challenge = challenges.find(challenge => challenge.id === parseInt(id));
+  const [fetchError, setFetchError] = useState(false);
   const [inputErrors, setInputErrors] = useState({});
+  const [editError, setEditError] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    description: ""
+    name: challenge && challenge.name,
+    description: challenge && challenge.description
   });
 
   useEffect(() => {
@@ -18,8 +24,10 @@ const EditChallengeForm = ({ challenge, setIsEditing, updateChallenge, editError
           name: challenge.name,
           description: challenge.description
       })
+    } else if (!loadingChallenge && !errorChallenge) {
+      setFetchError(true)
     }
-  }, [challenge])
+  }, [challenge, loadingChallenge, errorChallenge])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,10 +55,10 @@ const EditChallengeForm = ({ challenge, setIsEditing, updateChallenge, editError
       }
 
     try {
-      await axiosInstance.put(`/challenges/${id}`, formData);
-      console.log(formData);
-      updateChallenge(formData);
-      setIsEditing(false);
+      const { data } = await axiosInstance.put(`/challenges/${id}`, formData);
+      setChallenges(prevChallenges =>
+        prevChallenges.map(c => c.id === parseInt(id) ? data : c)
+      )
       navigate(`/challenges/${id}`)
     } catch (error) {
       console.log(`Could not edit challenge`, error);
@@ -59,16 +67,35 @@ const EditChallengeForm = ({ challenge, setIsEditing, updateChallenge, editError
   };
 
   const handleCancelClick = () => {
-    setIsEditing(false);
     navigate(`/challenges/${id}`);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
+  if (loadingChallenge) {
+    return <h3 className="page-loading-text">Loading...</h3>
+  };
+
+  if (errorChallenge || fetchError) {
+    return (
+        <>
+        <Navbar />
+        <p className="fetch-error-text">Sorry, our servers are having a hard time retrieving the challenge information. Please come back later.</p>
+        </>
+    )
   };
 
   return (
     <>
+    <Navbar />
     <h1 className="edit-challenge-form__heading">Edit Challenge</h1>
     <section className="edit-challenge-form__section">
       <div className="edit-challenge-form__img-wrapper">
-          <img className="edit-challenge-form__img" src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt={`background of ${challenge.name}`}/>
+          {challenge && (
+            <img className="edit-challenge-form__img" src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt={`background of ${challenge.name}`}/>
+          )}
       </div>
     <form className="edit-challenge-form" onSubmit={handleFormSubmit}>
         <div className="edit-challenge-form__name-wrapper">

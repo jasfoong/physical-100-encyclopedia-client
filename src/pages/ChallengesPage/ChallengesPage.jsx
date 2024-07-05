@@ -1,34 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { axiosInstance } from '../../utils/apiClient'
+import { Link, useNavigate } from 'react-router-dom';
+import { useChallenges } from '../../contexts/ChallengeContext';
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
+import Sidebar from '../../components/Sidebar/Sidebar';
 import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ChallengesPage.scss'
 
 const ChallengesPage = () => {
-    const [challenges, setChallenges] = useState([]);
-    const [fetchError, setFetchError] = useState(false);
+    const { challenges, loadingChallenge, errorChallenge } = useChallenges();
     const [renderedData, setRenderedData] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [scrollVisible, setScrollVisible] = useState(false);
+    const [selectedChallenge, setSelectedChallenge] = useState(null)
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchChallenges = async () => {
-            try {
-                const { data } = await axiosInstance.get("/challenges");
-                setChallenges(data);
-                setRenderedData(data)
-            } catch (error) {
-                console.log(`Error retrieving challenges`, error);
-                setFetchError(true);
-            }
-        };
-        fetchChallenges();
-
+        if (challenges.length > 0) {
+            setRenderedData(challenges);
+        } else {
+            setRenderedData([]);
+        }
+        
         window.addEventListener("scroll", handleScrollVisible)
-    }, []);
+    }, [challenges]);
 
     const handleScrollVisible = () => {
         if (window.scrollY > 100) {
@@ -78,12 +74,24 @@ const ChallengesPage = () => {
             setRenderedData(challenges);
         }
     }
+
+    const handleChallengeClick = (challenge) => {
+        if (window.innerWidth >= 1280) {
+            setSelectedChallenge(challenge)
+        } else {
+            navigate(`/challenges/${challenge.id}`)
+        }
+    }
+
+    const closeChallengeSidebar = () => {
+        setSelectedChallenge(null)
+    }
         
-    if (challenges.length === 0) {
+    if (loadingChallenge) {
         return <h3 className="page-loading-text">Loading...</h3>
     }
 
-    if (fetchError === true) {
+    if (errorChallenge) {
         return (
             <>
             <Navbar />
@@ -94,35 +102,38 @@ const ChallengesPage = () => {
 
     return (
         <>
-        <Navbar />
-        <section className="challenges">
-        <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
-        <FilterChips challenges={challenges} filterChallenges={filterChallenges}/>
-        <div className="challenges__column-headings-wrapper-lg">
-            <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
-            <h2 className="challenges__column-heading-lg">Season</h2>
-            <h2 className="challenges__column-heading-lg">Team/Solo</h2>
-        </div>
-        {
-            renderedData.map((challenge) => {
-                return (
-                <Link to={`/challenges/${challenge.id}`} key={challenge.id} className="challenges__instance-link">
-                    <div className="challenges__instance">
-                    <img className="challenges__img" src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt="challenge context"/>
-                    <h3 className="challenges__text challenges__name">{challenge.name}</h3>
-                    <h4 className="challenges__text">Season {challenge.season}</h4>
-                    <h4 className="challenges__text">{challenge.team ? "Team" : "Solo"}</h4>
-                </div>
-                </Link>
-                )
-            })
-        }
-        {scrollVisible && (
-            <div className="challenges__scroll-to-top-wrapper" onClick={handleScrollClick}>
-                <img className="challenges__scroll-to-top" src={scrollUpIcon} alt="up arrow"/>
+        <main className={`challenges__wrapper ${selectedChallenge && "challenges__wrapper--sidebar-open"}`}>
+        <div className={`challenges__main ${selectedChallenge && "challenges__main--sidebar-open"}`}>
+            <Navbar />
+            <section className="challenges">
+            <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
+            <FilterChips challenges={challenges} filterChallenges={filterChallenges}/>
+            <div className="challenges__column-headings-wrapper-lg">
+                <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
+                <h2 className="challenges__column-heading-lg">Season</h2>
+                <h2 className="challenges__column-heading-lg">Team/Solo</h2>
             </div>
-        )}
-        </section>
+            {
+                renderedData.map((challenge) => {
+                    return (
+                        <div className="challenges__instance" key={challenge.id} onClick={() => handleChallengeClick(challenge)}>
+                        <img className="challenges__img" src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt="challenge context"/>
+                        <h3 className="challenges__text challenges__name">{challenge.name}</h3>
+                        <h4 className="challenges__text">Season {challenge.season}</h4>
+                        <h4 className="challenges__text">{challenge.team ? "Team" : "Solo"}</h4>
+                    </div>
+                    )
+                })
+            }
+            </section>
+            {scrollVisible && (
+                <div className="challenges__scroll-to-top-wrapper" onClick={handleScrollClick}>
+                    <img className="challenges__scroll-to-top" src={scrollUpIcon} alt="up arrow"/>
+                </div>
+            )}
+        </div>
+        {selectedChallenge && <Sidebar selectedChallenge={selectedChallenge} closeChallengeSidebar={closeChallengeSidebar}/>}
+        </main>
         </>
     )
 }

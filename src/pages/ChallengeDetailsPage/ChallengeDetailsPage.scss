@@ -10,19 +10,35 @@
     
     @include tablet {
         margin-top: 10%;
+        flex-direction: row;
+        align-items: flex-end;    
     }
 
-    @include tablet {
-        flex-direction: row;
-        align-items: flex-end;
+    @include desktop {
+        margin: 14% 5% 0 5%;
+    }
+
+    &--sidebar-style {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15%;
     }
 
     &__img {
         width: 100%;
+        height: 55%;
+        object-fit: cover;
+        border-radius: 0.25rem;
         
         @include tablet {
             border-radius: 0.35rem;
             width: 30vw;
+            height: 100%;
+        }
+
+        &--sidebar-style {
+            width: 26vw;
+            height: 50%;
         }
     }
 
@@ -37,6 +53,7 @@
 
         @include desktop {
             font-size: 2.4rem;
+            margin-top: 10%;
         }
     }
 

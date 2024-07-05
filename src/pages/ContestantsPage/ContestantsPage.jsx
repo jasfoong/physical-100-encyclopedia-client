@@ -76,7 +76,7 @@ const ContestantsPage = () => {
         }
     };
 
-    const closeSidebar = () => {
+    const closeContestantSidebar = () => {
         setSelectedContestant(null)
     };
 
@@ -124,7 +124,7 @@ const ContestantsPage = () => {
                 </div>
             )}
         </div>
-        {selectedContestant && <Sidebar selectedContestant={selectedContestant} closeSidebar={closeSidebar}/>}
+        {selectedContestant && <Sidebar selectedContestant={selectedContestant} closeContestantSidebar={closeContestantSidebar}/>}
         </main>
     )
 }

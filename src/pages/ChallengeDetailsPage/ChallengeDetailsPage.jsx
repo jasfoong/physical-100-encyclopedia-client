@@ -1,54 +1,39 @@
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { axiosInstance } from '../../utils/apiClient'
+import { useChallenges } from '../../contexts/ChallengeContext';
 import Navbar from '../../components/Navbar/Navbar'
-import EditChallengeForm from '../../components/EditChallengeForm/EditChallengeForm'
 import './ChallengeDetailsPage.scss'
 
-const ContestantDetailsPage = () => {
+const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
+    const navigate = useNavigate();
     const { id } = useParams();
-    const [challenge, setChallenge] = useState({});
+    const { challenges, loadingChallenge, errorChallenge } = useChallenges();
+    const [challenge, setChallenge] = useState(selectedChallenge || null);
     const [fetchError, setFetchError] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editError, setEditError] = useState(false);
 
     useEffect(() => {
-        const fetchChallenge = async () => {
-            try {
-                const { data } = await axiosInstance.get(`/challenges/${id}`);
-                const fetchedChallenge = data[0];
-                
-                if (JSON.stringify(fetchedChallenge) !== JSON.stringify(challenge)) {
-                    setChallenge(fetchedChallenge);
-                }
-            } catch (error) {
-                console.log(`Error retrieving challenge information`, error);
-                setFetchError(true);
+        if (!selectedChallenge && id) {
+            const fetchedChallenge = challenges.find(challenge => challenge.id === parseInt(id))
+
+            if (fetchedChallenge) {
+                setChallenge(fetchedChallenge)
+            } else {
+                setFetchError(true)
             }
-        };
-        fetchChallenge();
-    }, [id, challenge]);
+        } else {
+            setChallenge(selectedChallenge)
+        }
+    }, [selectedChallenge, id, challenges]);
 
     const handleEditClick = () => {
-        setIsEditing(true);
-    };
-
-    const updateChallenge = async (updatedChallenge) => {
-        try {
-            await axiosInstance.put(`/challenges/${id}`, updatedChallenge);
-            setChallenge(updatedChallenge);
-            setIsEditing(false);
-        } catch (error) {
-            console.log(`Could not update challenge`, error);
-            setEditError(true);
-        }
+        navigate(`/challenges/${challenge.id}/edit`)
     };
     
-    if (!challenge) {
+    if (loadingChallenge) {
         return <h3 className="page-loading-text">Loading...</h3>
     }
 
-    if (fetchError === true) {
+    if (errorChallenge || fetchError || !challenge) {
         return (
             <>
             <Navbar />
@@ -59,27 +44,17 @@ const ContestantDetailsPage = () => {
 
     return (
         <>
-        <Navbar />
-        {isEditing ? (
-            <EditChallengeForm 
-                challenge={challenge}
-                setIsEditing={setIsEditing}
-                updateChallenge={updateChallenge}
-                editError={editError}
-                setEditError={setEditError}
-            />
-        ) : (
-            <section className="challenge">
+        { !isInSidebar && <Navbar /> }
+            <section className={`challenge ${isInSidebar && "challenge--sidebar-style"}`}>
                 <div className="challenge--left">
-                    <img className="challenge__img" src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt="challenge background"/>
+                    <Link to={`/challenges/${challenge.id}`}><img className={`challenge__img ${isInSidebar && "challenge__img--sidebar-style"}`} src={`${process.env.REACT_APP_SERVER_URL}/${challenge.photo}`} alt="challenge background"/></Link>
                 </div>
                 <div className="challenge--right">
-                    <h1 className="challenge__name">{challenge.name}</h1>
+                    <Link to={`/challenges/${challenge.id}`}><h1 className="challenge__name">{challenge.name}</h1></Link>
                     <p className="challenge__description">{challenge.description}</p>
                 </div>
                 <button className="challenge__edit-btn" onClick={handleEditClick}>Edit</button>
             </section>
-        )}
         </>
     )
 }
