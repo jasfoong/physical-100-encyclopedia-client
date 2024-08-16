@@ -39,7 +39,7 @@ const ContestantStats = ({ selectedContestant, isInSidebar }) => {
     }
 
     return (
-        <Link to={`/contestants/${contestant.id}`}><section className="contestant-stats">
+        <section className="contestant-stats">
             <h3 className="contestant-stats__heading">Stats</h3>
             <div className="contestant-stats__stats-wrapper">
                 <div className="contestant-stats__instance">
@@ -62,8 +62,12 @@ const ContestantStats = ({ selectedContestant, isInSidebar }) => {
                     <span className={`contestant-stats__data contestant-stats__specialty-data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.special_skills}</span>
                 </div>
             </div>
+            <div className="contestant-stats__stats-wrapper">
+                <div className="contestant-stats__instance contestant-stats__instance-instagram">
+                <a href={`${contestant.instagram}`} target="_blank" rel="noopener noreferrer"><span className={`contestant-stats__data contestant-stats__data--link ${isInSidebar && "contestant-stats__data--sidebar contestant-stats__data--sidebar-link"}`}>Instagram</span></a>
+                </div>
+            </div>
         </section> 
-        </Link>   
     )
 }
 

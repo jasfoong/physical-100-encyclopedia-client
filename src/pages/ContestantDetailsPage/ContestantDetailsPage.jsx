@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContestants } from '../../contexts/ContestantContext';
 import Navbar from '../../components/Navbar/Navbar'
@@ -48,7 +48,9 @@ const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
         { !isInSidebar && <Navbar /> }
             <section className={`contestant ${isInSidebar && "contestant--sidebar-style"}`}>
                 <div className="contestant--left">
-                    <img className={`contestant__img ${isInSidebar && "contestant__img--sidebar-style"}`} src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
+                    <Link to={`/contestants/${contestant.id}`}>
+                        <img className={`contestant__img ${isInSidebar && "contestant__img--sidebar-style"}`} src={`${process.env.REACT_APP_SERVER_URL}/${contestant.photo}`} alt={contestant.name}/>
+                    </Link>
                 </div>
                 <div className="contestant--right">
                     <h1 className="contestant__name">{contestant.name}</h1>
