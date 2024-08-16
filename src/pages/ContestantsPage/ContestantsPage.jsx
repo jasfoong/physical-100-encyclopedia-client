@@ -15,6 +15,7 @@ const ContestantsPage = () => {
     const [careerCategories, setCareerCategories] = useState([]);
     const [selectedContestant, setSelectedContestant] = useState(null);
     const [scrollVisible, setScrollVisible] = useState(false);
+    const seasons = [...new Set(contestants.map(c => c.season))];
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -67,6 +68,15 @@ const ContestantsPage = () => {
             setRenderedContestants(filteredContestants);
         }
     };
+
+    const filterBySeason = (season) => {
+        if (season === null) {
+            setRenderedContestants(contestants);
+        } else {
+            const filteredContestantsBySeason = contestants.filter(contestant => contestant.season === season)
+            setRenderedContestants(filteredContestantsBySeason);
+        }
+    }
       
     const handleContestantClick = (contestant) => {
         if (window.innerWidth >= 1280) {
@@ -99,7 +109,8 @@ const ContestantsPage = () => {
             <Navbar />
             <section className="contestants">
             <Link to="/"><h1 className="contestants__heading">Contestants</h1></Link>
-            <FilterChips careerCategories={careerCategories} filterContestants={filterContestants}/>
+            <FilterChips careerCategories={careerCategories} filterContestants={filterContestants} />
+            <FilterChips seasons={seasons} filterBySeason={filterBySeason}/>
             <div className="contestants__column-headings-wrapper-lg">
                 <h3 onClick={() => {sortColumns("name")}}className="contestants__column-heading-lg contestants__column-heading-lg--name">Name {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h3>
                 <h3 className="contestants__column-heading-lg">Season</h3>

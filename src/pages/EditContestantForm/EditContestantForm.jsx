@@ -91,7 +91,7 @@ const EditContestantForm = () => {
     return (
     <>
     <Navbar />
-    <h1 className="edit-contestant-form__heading"> Edit Contestant</h1>
+    <h1 className="edit-contestant-form__heading">Edit Contestant</h1>
     <section className="edit-contestant-form__section">
     <div className="edit-contestant-form__img-wrapper">
         {contestant && (

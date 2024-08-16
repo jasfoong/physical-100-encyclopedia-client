@@ -41,22 +41,6 @@
         }
     }
 
-    &__bar {
-        background-color: $light-grey;
-        border-radius: 0.2rem;
-        overflow: hidden;
-        height: 0.625rem;
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    &__bar-fill {
-        background-color: $ruby;
-        height: 100%;
-        width: 0; 
-        transition: width 0.3s ease;
-    }
-
     &__specialty-wrapper {
         background-color: rgb(110, 39, 39);
         border-radius: 0 0 0.45rem 0.45rem;

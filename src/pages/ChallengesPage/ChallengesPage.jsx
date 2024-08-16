@@ -14,6 +14,7 @@ const ChallengesPage = () => {
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [scrollVisible, setScrollVisible] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState(null)
+    const seasons = [...new Set(challenges.map(c => c.season))];
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,6 +76,15 @@ const ChallengesPage = () => {
         }
     }
 
+    const filterBySeason = (season) => {
+        if (season === null) {
+            setRenderedData(challenges);
+        } else {
+            const filteredChallengesBySeason = challenges.filter(challenge => challenge.season === season)
+            setRenderedData(filteredChallengesBySeason);
+        }
+    }
+
     const handleChallengeClick = (challenge) => {
         if (window.innerWidth >= 1280) {
             setSelectedChallenge(challenge)
@@ -108,6 +118,7 @@ const ChallengesPage = () => {
             <section className="challenges">
             <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
             <FilterChips challenges={challenges} filterChallenges={filterChallenges}/>
+            <FilterChips seasons={seasons} filterBySeason={filterBySeason}/>
             <div className="challenges__column-headings-wrapper-lg">
                 <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
                 <h2 className="challenges__column-heading-lg">Season</h2>

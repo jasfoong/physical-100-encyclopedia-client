@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"
 import { slide as Menu } from 'react-burger-menu'
 import contestantsIcon from "../../assets/logos/contestants.png"
 import challengeIcon from "../../assets/logos/challenge.png"
-import statsIcon from "../../assets/logos/charts.png"
 import './Navbar.scss'
 
 const Navbar = () => {
@@ -28,9 +27,6 @@ const Navbar = () => {
             <a id="challenges" className="menu-item" href="/challenges">
                 <img className="navbar__challenge" src={challengeIcon} alt="icon of rocket ship"/>
                 Challenges</a>
-            <a id="stats" className="menu-item" href="/stats">
-                <img className="navbar__stat" src={statsIcon} alt="icon of toggle bars"/>
-                Stats</a>
             </Menu>
         ) : (
         <section className="navbar">
@@ -42,11 +38,6 @@ const Navbar = () => {
             <Link to="/challenges" className="navbar__challenge-wrapper">
                 <div>
                     <img className="navbar__challenge" src={challengeIcon} alt="icon of rocket ship"/>
-                </div>
-            </Link>
-            <Link to="/stats" className="navbar__stat-wrapper">
-                <div>
-                    <img className="navbar__stat" src={statsIcon} alt="icon of toggle bars"/>
                 </div>
             </Link>
         </section>

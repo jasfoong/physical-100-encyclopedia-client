@@ -43,25 +43,16 @@ const ContestantStats = ({ selectedContestant, isInSidebar }) => {
             <h3 className="contestant-stats__heading">Stats</h3>
             <div className="contestant-stats__stats-wrapper">
                 <div className="contestant-stats__instance">
-                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.strength}</span>
-                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Strength</h5>
-                    <div className="contestant-stats__bar">
-                        <div className="contestant-stats__bar-fill" style={{ width: `${contestant.stats.strength}%` }}></div>
-                    </div>
+                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Height: </h5>
+                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.height_cm}cm</span>
                 </div>
                 <div className="contestant-stats__instance">
-                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.endurance}</span>
-                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Endurance</h5>
-                    <div className="contestant-stats__bar">
-                        <div className="contestant-stats__bar-fill" style={{ width: `${contestant.stats.endurance}%` }}></div>
-                    </div>
+                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Weight: </h5>
+                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.weight_kg}kg</span>
                 </div>
                 <div className="contestant-stats__instance">
-                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.speed}</span>
-                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Speed</h5>
-                    <div className="contestant-stats__bar">
-                        <div className="contestant-stats__bar-fill" style={{ width: `${contestant.stats.speed}%` }}></div>
-                    </div>
+                    <h5 className={`contestant-stats__label ${isInSidebar && "contestant-stats__label--sidebar"}`}>Gender: </h5>
+                    <span className={`contestant-stats__data ${isInSidebar && "contestant-stats__data--sidebar"}`}>{contestant.stats.gender}</span>
                 </div>
             </div>
             <WinsAndLosses selectedContestant={selectedContestant} isInSidebar={isInSidebar}/>
