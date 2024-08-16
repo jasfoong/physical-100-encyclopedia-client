@@ -14,6 +14,8 @@ const ChallengesPage = () => {
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [scrollVisible, setScrollVisible] = useState(false);
     const [selectedChallenge, setSelectedChallenge] = useState(null)
+    const [selectedChallengeType, setSelectedChallengeType] = useState(null);
+    const [selectedSeason, setSelectedSeason] = useState(null);
     const seasons = [...new Set(challenges.map(c => c.season))];
     const navigate = useNavigate();
 
@@ -64,26 +66,30 @@ const ChallengesPage = () => {
     };
 
     const filterChallenges = (challengeType) => {
-        if (challengeType === "team") {
-            const teamChallenges = challenges.filter(challenge => challenge.team === 1);
-            setRenderedData(teamChallenges);
-            console.log(`team Challenges`, teamChallenges)
-        } else if (challengeType === "solo") {
-            const soloChallenges = challenges.filter(challenge => challenge.team === 0);
-            setRenderedData(soloChallenges);
-        } else {
-            setRenderedData(challenges);
-        }
-    }
-
+        setSelectedChallengeType(challengeType);
+        applyChallengeFilters(challengeType, selectedSeason);
+    };
+    
     const filterBySeason = (season) => {
-        if (season === null) {
-            setRenderedData(challenges);
-        } else {
-            const filteredChallengesBySeason = challenges.filter(challenge => challenge.season === season)
-            setRenderedData(filteredChallengesBySeason);
+        setSelectedSeason(season);
+        applyChallengeFilters(selectedChallengeType, season);
+    };
+    
+    const applyChallengeFilters = (challengeType, season) => {
+        let filteredChallenges = challenges;
+    
+        if (challengeType === "team") {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 1);
+        } else if (challengeType === "solo") {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 0);
         }
-    }
+    
+        if (season !== null) {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.season === season);
+        }
+    
+        setRenderedData(filteredChallenges);
+    };
 
     const handleChallengeClick = (challenge) => {
         if (window.innerWidth >= 1280) {

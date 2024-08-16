@@ -13,6 +13,8 @@ const ContestantsPage = () => {
     const [renderedContestants, setRenderedContestants] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [careerCategories, setCareerCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedSeason, setSelectedSeason] = useState(null);
     const [selectedContestant, setSelectedContestant] = useState(null);
     const [scrollVisible, setScrollVisible] = useState(false);
     const seasons = [...new Set(contestants.map(c => c.season))];
@@ -61,22 +63,28 @@ const ContestantsPage = () => {
     };
 
     const filterContestants = (category) => {
-        if (category === null) {
-            setRenderedContestants(contestants);
-        } else {
-            const filteredContestants = contestants.filter(contestant => contestant.career_category === category)
-            setRenderedContestants(filteredContestants);
-        }
+        setSelectedCategory(category);
+        applyFilters(category, selectedSeason);
     };
-
+    
     const filterBySeason = (season) => {
-        if (season === null) {
-            setRenderedContestants(contestants);
-        } else {
-            const filteredContestantsBySeason = contestants.filter(contestant => contestant.season === season)
-            setRenderedContestants(filteredContestantsBySeason);
+        setSelectedSeason(season);
+        applyFilters(selectedCategory, season);
+    };
+    
+    const applyFilters = (category, season) => {
+        let filteredContestants = contestants;
+    
+        if (category !== null) {
+            filteredContestants = filteredContestants.filter(contestant => contestant.career_category === category);
         }
-    }
+    
+        if (season !== null) {
+            filteredContestants = filteredContestants.filter(contestant => contestant.season === season);
+        }
+    
+        setRenderedContestants(filteredContestants);
+    };
       
     const handleContestantClick = (contestant) => {
         if (window.innerWidth >= 1280) {
