@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useChallenges } from '../../contexts/ChallengeContext';
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ChallengesPage.scss'
 
@@ -16,6 +17,7 @@ const ChallengesPage = () => {
     const [selectedChallenge, setSelectedChallenge] = useState(null)
     const [selectedChallengeType, setSelectedChallengeType] = useState(null);
     const [selectedSeason, setSelectedSeason] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const seasons = [...new Set(challenges.map(c => c.season))];
     const navigate = useNavigate();
 
@@ -28,6 +30,32 @@ const ChallengesPage = () => {
         
         window.addEventListener("scroll", handleScrollVisible)
     }, [challenges]);
+
+    const applyChallengeFilters = useCallback((challengeType, season) => {
+        let filteredChallenges = challenges;
+    
+        if (challengeType === "team") {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 1);
+        } else if (challengeType === "solo") {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 0);
+        }
+    
+        if (season !== null) {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.season === season);
+        }
+
+        if (searchTerm) {
+            filteredChallenges = filteredChallenges.filter(challenge => challenge.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+    
+        if (JSON.stringify(filteredChallenges) !== JSON.stringify(renderedData)) {
+            setRenderedData(filteredChallenges);
+        }
+    },[challenges, renderedData, searchTerm]);
+
+    useEffect(() => {
+        applyChallengeFilters(selectedChallenge, selectedSeason, searchTerm);
+    }, [selectedChallenge, selectedSeason, searchTerm, applyChallengeFilters]);
 
     const handleScrollVisible = () => {
         if (window.scrollY > 100) {
@@ -74,22 +102,6 @@ const ChallengesPage = () => {
         setSelectedSeason(season);
         applyChallengeFilters(selectedChallengeType, season);
     };
-    
-    const applyChallengeFilters = (challengeType, season) => {
-        let filteredChallenges = challenges;
-    
-        if (challengeType === "team") {
-            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 1);
-        } else if (challengeType === "solo") {
-            filteredChallenges = filteredChallenges.filter(challenge => challenge.team === 0);
-        }
-    
-        if (season !== null) {
-            filteredChallenges = filteredChallenges.filter(challenge => challenge.season === season);
-        }
-    
-        setRenderedData(filteredChallenges);
-    };
 
     const handleChallengeClick = (challenge) => {
         if (window.innerWidth >= 1280) {
@@ -124,7 +136,10 @@ const ChallengesPage = () => {
             <section className="challenges">
             <Link to="/challenges"><h1 className="challenges__heading">Challenges</h1></Link>
             <FilterChips challenges={challenges} filterChallenges={filterChallenges}/>
-            <FilterChips seasons={seasons} filterBySeason={filterBySeason}/>
+            <div className="challenges__filters-wrapper">
+                <FilterChips seasons={seasons} filterBySeason={filterBySeason}/>
+                <SearchBar onSearch={setSearchTerm}/>
+            </div>
             <div className="challenges__column-headings-wrapper-lg">
                 <h2 className="challenges__column-heading-lg challenges__column-heading-lg--title" onClick={() => {sortColumns("name")}}>Title {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h2>
                 <h2 className="challenges__column-heading-lg">Season</h2>
