@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContestants } from '../../contexts/ContestantContext';
 import sortArray from 'sort-array';
 import Navbar from '../../components/Navbar/Navbar'
 import FilterChips from '../../components/FilterChips/FilterChips';
 import Sidebar from '../../components/Sidebar/Sidebar'
+import SearchBar from '../../components/SearchBar/SearchBar';
 import scrollUpIcon from '../../assets/logos/up-arrow.png'
 import './ContestantsPage.scss'
 
@@ -17,6 +18,7 @@ const ContestantsPage = () => {
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [selectedContestant, setSelectedContestant] = useState(null);
     const [scrollVisible, setScrollVisible] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const seasons = [...new Set(contestants.map(c => c.season))];
     const navigate = useNavigate();
 
@@ -33,6 +35,30 @@ const ContestantsPage = () => {
 
         window.addEventListener("scroll", handleScrollVisible)
     }, [contestants]);
+
+    const applyFilters = useCallback((category, season) => {
+        let filteredContestants = contestants;
+    
+        if (category !== null) {
+            filteredContestants = filteredContestants.filter(contestant => contestant.career_category === category);
+        }
+    
+        if (season !== null) {
+            filteredContestants = filteredContestants.filter(contestant => contestant.season === season);
+        }
+
+        if (searchTerm) {
+            filteredContestants = filteredContestants.filter(contestant => contestant.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+    
+        if (JSON.stringify(filteredContestants) !== JSON.stringify(renderedContestants)) {
+            setRenderedContestants(filteredContestants);
+        }
+    }, [contestants, renderedContestants, searchTerm]);
+
+    useEffect(() => {
+        applyFilters(selectedCategory, selectedSeason, searchTerm);
+    }, [selectedCategory, selectedSeason, searchTerm, applyFilters]);
 
     const handleScrollVisible = () => {
         if (window.scrollY > 100) {
@@ -71,20 +97,6 @@ const ContestantsPage = () => {
         setSelectedSeason(season);
         applyFilters(selectedCategory, season);
     };
-    
-    const applyFilters = (category, season) => {
-        let filteredContestants = contestants;
-    
-        if (category !== null) {
-            filteredContestants = filteredContestants.filter(contestant => contestant.career_category === category);
-        }
-    
-        if (season !== null) {
-            filteredContestants = filteredContestants.filter(contestant => contestant.season === season);
-        }
-    
-        setRenderedContestants(filteredContestants);
-    };
       
     const handleContestantClick = (contestant) => {
         if (window.innerWidth >= 1280) {
@@ -118,7 +130,10 @@ const ContestantsPage = () => {
             <section className="contestants">
             <Link to="/"><h1 className="contestants__heading">Contestants</h1></Link>
             <FilterChips careerCategories={careerCategories} filterContestants={filterContestants} />
-            <FilterChips seasons={seasons} filterBySeason={filterBySeason}/>
+            <div className="contestants__filters-wrapper">
+                <FilterChips seasons={seasons} filterBySeason={filterBySeason}/> 
+                <SearchBar onSearch={setSearchTerm} />
+            </div>
             <div className="contestants__column-headings-wrapper-lg">
                 <h3 onClick={() => {sortColumns("name")}}className="contestants__column-heading-lg contestants__column-heading-lg--name">Name {sortConfig.key === "name" && (sortConfig.direction === "asc" ? "▲" : "▼")}</h3>
                 <h3 className="contestants__column-heading-lg">Season</h3>

@@ -1,0 +1,30 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/global" as *;
+
+.search-bar {
+    @include tablet {
+        flex: 2;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 0.35rem 0.5rem;
+        font-size: 0.7rem;
+        border-radius: 0.75rem;
+        border: 0.0625rem solid $dark-grey;
+
+        @include tablet {
+            padding: 0.45rem 0.75rem;
+            border-radius: 0.85rem;
+            width: 20%;
+        }
+
+        @include desktop {
+            padding: 0.65rem 0.95rem;
+            border-radius: 1.2rem;
+            font-size: 0.9rem;
+        }
+    }
+}
