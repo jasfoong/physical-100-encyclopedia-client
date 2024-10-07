@@ -1,11 +1,10 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useChallenges } from '../../contexts/ChallengeContext';
 import Navbar from '../../components/Navbar/Navbar'
 import './ChallengeDetailsPage.scss'
 
 const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
-    const navigate = useNavigate();
     const { id } = useParams();
     const { challenges, loadingChallenge, errorChallenge } = useChallenges();
     const [challenge, setChallenge] = useState(selectedChallenge || null);
@@ -24,10 +23,6 @@ const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
             setChallenge(selectedChallenge)
         }
     }, [selectedChallenge, id, challenges]);
-
-    const handleEditClick = () => {
-        navigate(`/challenges/${challenge.id}/edit`)
-    };
     
     if (loadingChallenge) {
         return <h3 className="page-loading-text">Loading...</h3>
@@ -53,7 +48,6 @@ const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
                     <Link to={`/challenges/${challenge.id}`}><h1 className="challenge__name">{challenge.name}</h1></Link>
                     <p className="challenge__description">{challenge.description}</p>
                 </div>
-                <button className="challenge__edit-btn" onClick={handleEditClick}>Edit</button>
             </section>
         </>
     )

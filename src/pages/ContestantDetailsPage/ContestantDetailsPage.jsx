@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContestants } from '../../contexts/ContestantContext';
 import Navbar from '../../components/Navbar/Navbar'
@@ -6,7 +6,6 @@ import ContestantStats from '../../components/ContestantStats/ContestantStats';
 import './ContestantDetailsPage.scss'
 
 const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
-    const navigate = useNavigate();
     const { id } = useParams();
     const { contestants, loading, error } = useContestants();
     const [contestant, setContestant] = useState(selectedContestant || null);
@@ -25,10 +24,6 @@ const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
             setContestant(selectedContestant)
         }
     }, [selectedContestant, id, contestants])
-        
-    const handleEditClick = () => {
-        navigate(`/contestants/${contestant.id}/edit`)
-    };
 
     if (loading) {
         return <h3 className="page-loading-text">Loading...</h3>
@@ -56,7 +51,6 @@ const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
                     <h1 className="contestant__name">{contestant.name}</h1>
                     <p className="contestant__description">{contestant.description}</p>
                 </div>
-                <button className="contestant__edit-btn" onClick={handleEditClick}>Edit</button>
             </section>
             <ContestantStats selectedContestant={selectedContestant} isInSidebar={isInSidebar}/>
         </>

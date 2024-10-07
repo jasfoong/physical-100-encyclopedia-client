@@ -20,12 +20,9 @@
 
     &__contestant, &__challenge, &__stat {
         @include nav-icons;
-
-        @include desktop {
-            margin-right: 1.25rem;
-            margin-top: 2%;
-            filter: invert(100%);
-        }
+        margin-right: 1.25rem;
+        margin-top: 2%;
+        filter: invert(100%);
     }
 }
 
