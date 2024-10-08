@@ -11,33 +11,30 @@ const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
     const [fetchError, setFetchError] = useState(false);
 
     useEffect(() => {
-        if (!selectedChallenge && id) {
-            if (challenges.length === 0) {
+        if (selectedChallenge) {
+            setChallenge(selectedChallenge);
+        } 
+        else if (id) {
+            const fetchedChallenge = challenges.find(c => c.id === parseInt(id));
+
+            if (fetchedChallenge) {
+                setChallenge(fetchedChallenge);  
+            } else {
                 fetch(`${process.env.REACT_APP_SERVER_URL}/challenges/${id}`)
-                    .then(response => {
+                    .then((response) => {
                         if (!response.ok) {
-                            throw new Error('Network response was not ok');
+                            throw new Error('Error fetching challenge');
                         }
                         return response.json();
                     })
-                    .then(data => {
-                        setChallenge(data);
+                    .then((data) => {
+                        setChallenge(data);  
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.error('Fetch error:', err);
-                        setFetchError(true);
+                        setFetchError(true);  
                     });
-            } else {
-                const fetchedChallenge = challenges.find(challenge => challenge.id === parseInt(id))
-    
-                if (fetchedChallenge) {
-                    setChallenge(fetchedChallenge)
-                } else {
-                    setFetchError(true)
-                }
             }
-        } else {
-            setChallenge(selectedChallenge)
         }
     }, [selectedChallenge, id, challenges]);
     
