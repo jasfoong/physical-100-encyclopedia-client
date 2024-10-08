@@ -18,11 +18,9 @@ export const ChallengeProvider = ({ children }) => {
                 const { data } = await axiosInstance.get(`/challenges`);
                 setChallenges(data);
                 setLoadingChallenge(false);
-                console.log(`fetched contestants`, data)
             } catch (error) {
                 setErrorChallenge(`Error retrieving challenges`, error);
                 setLoadingChallenge(false);
-                console.log(`error fetching challenges`, error)
             }
         }
 
