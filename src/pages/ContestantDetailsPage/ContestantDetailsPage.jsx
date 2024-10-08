@@ -12,16 +12,30 @@ const ContestantDetailsPage = ({ selectedContestant, isInSidebar }) => {
     const [fetchError, setFetchError] = useState(false);
 
     useEffect(() => {
-        if (!selectedContestant && id) {
-            const fetchedContestant = contestants.find(contestant => contestant.id === parseInt(id))
+        if (selectedContestant) {
+            setContestant(selectedContestant);
+        } 
+        else if (id) {
+            const fetchedContestant = contestants.find(c => c.id === parseInt(id));
 
             if (fetchedContestant) {
-                setContestant(fetchedContestant)
+                setContestant(fetchedContestant);  
             } else {
-                setFetchError(true)
+                fetch(`${process.env.REACT_APP_SERVER_URL}contestants/${id}`)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Error fetching contestant');
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        setContestant(data);  
+                    })
+                    .catch((err) => {
+                        console.error('Fetch error:', err);
+                        setFetchError(true);  
+                    });
             }
-        } else {
-            setContestant(selectedContestant)
         }
     }, [selectedContestant, id, contestants])
 

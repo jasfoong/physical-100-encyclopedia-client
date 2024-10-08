@@ -20,7 +20,7 @@ const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
             if (fetchedChallenge) {
                 setChallenge(fetchedChallenge);  
             } else {
-                fetch(`${process.env.REACT_APP_SERVER_URL}/challenges/${id}`)
+                fetch(`${process.env.REACT_APP_SERVER_URL}challenges/${id}`)
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error('Error fetching challenge');
