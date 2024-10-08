@@ -12,12 +12,29 @@ const ContestantDetailsPage = ({ selectedChallenge, isInSidebar }) => {
 
     useEffect(() => {
         if (!selectedChallenge && id) {
-            const fetchedChallenge = challenges.find(challenge => challenge.id === parseInt(id))
-
-            if (fetchedChallenge) {
-                setChallenge(fetchedChallenge)
+            if (challenges.length === 0) {
+                fetch(`${process.env.REACT_APP_SERVER_URL}/challenges/${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        setChallenge(data);
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                        setFetchError(true);
+                    });
             } else {
-                setFetchError(true)
+                const fetchedChallenge = challenges.find(challenge => challenge.id === parseInt(id))
+    
+                if (fetchedChallenge) {
+                    setChallenge(fetchedChallenge)
+                } else {
+                    setFetchError(true)
+                }
             }
         } else {
             setChallenge(selectedChallenge)
